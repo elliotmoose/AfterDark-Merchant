@@ -21,17 +21,44 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var passwordLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
+
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var afterDarkIconHorizontalConstraint: NSLayoutConstraint!
-    @IBOutlet weak var afterDarkIconVerticalConstraint: NSLayoutConstraint!
     
     var activeField : UITextField?
     
     @IBOutlet weak var scrollView: UIScrollView!
     
+    let checkedImage = #imageLiteral(resourceName: "Checked").withRenderingMode(.alwaysTemplate)
+    let uncheckedImage = #imageLiteral(resourceName: "Unchecked").withRenderingMode(.alwaysTemplate)
+    
+    @IBOutlet weak var rememberMeCheckBox: UIImageView!
+    var rememberMe = false
+    @IBAction func rememberMePressed(_ sender: Any) {
+        //toggle remember me
+        
+        if rememberMe
+        {
+            rememberMe = false
+            UncheckBox()
+        }
+        else
+        {
+            rememberMe = true
+            CheckBox()
+        }
+        
+    }
+
+    func CheckBox()
+    {
+        rememberMeCheckBox.image = checkedImage
+    }
+    
+    func UncheckBox()
+    {
+        rememberMeCheckBox.image = uncheckedImage
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,35 +100,26 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
     override func viewDidAppear(_ animated: Bool) {
         self.view.layoutIfNeeded()
 
-        if Account.singleton.user_name == "" || Account.singleton.user_name == nil
+        if Account.singleton.Merchant_username == "" || Account.singleton.Merchant_username == nil
         {
-            //animate in login form
-            self.afterDarkIconVerticalConstraint.constant = -125
-
-            UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
-                self.view.layoutIfNeeded()
-            },
-            completion:
-            {(finish) -> Void in
-            
-                UIView.animate(withDuration: 1, delay: 0, options: .curveEaseIn, animations: {
-
-                    self.usernameLabel.alpha = 1
-                    self.usernameTextField.alpha = 1
-                    self.passwordLabel.alpha = 1
-                    self.passwordTextField.alpha = 1
-                    self.signInButton.alpha = 1
-                    self.createAccountButton.alpha = 1
-                    self.forgotPasswordButton.alpha = 1
-                    
-                })
-                
-            })
+            let username = CacheManager.singleton.RememberMeUsername()
+            if username != "" && username != nil
+            {
+                usernameTextField.text = username!
+                rememberMe = true
+                CheckBox()
+            }
+            else
+            {
+                usernameTextField.text = ""
+                rememberMe = false
+                UncheckBox()
+            }
         }
         else
         {
             //fade out
-            self.dismiss(animated: true, completion: nil)
+            Dismiss()
         }
         
         
@@ -117,28 +135,23 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
         grayViewOverlay.alpha = 0
         
         usernameTextField.clearButtonMode = .whileEditing
-        usernameLabel.alpha = 0
-        usernameTextField.alpha = 0
-        passwordLabel.alpha = 0
-        passwordTextField.alpha = 0
-        self.signInButton.alpha = 0
-        self.createAccountButton.alpha = 0
-        self.forgotPasswordButton.alpha = 0
-        
+
         self.signInButton.addTarget(self, action: #selector(SignIn), for: .touchUpInside)
-        self.createAccountButton.addTarget(self, action: #selector(CreateAccountButtonPressed), for: .touchUpInside)
         self.forgotPasswordButton.addTarget(self, action: #selector(ForgotPasswordButtonPressed), for: .touchUpInside)
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self
-        
-        afterDarkIconVerticalConstraint.constant = 0
-        afterDarkIconHorizontalConstraint.constant = 0
+
         self.view.layoutIfNeeded()
         
-        NewAccountFormViewController.singleton.delegate = self;
         
         addKeyboardToolBar()
+        
+        rememberMeCheckBox.image = #imageLiteral(resourceName: "Unchecked").withRenderingMode(.alwaysTemplate)
+        rememberMeCheckBox.tintColor = UIColor.white
+        
+        signInButton.layer.cornerRadius = 5
+        createAccountButton.layer.cornerRadius = 5
     }
     
     func SignIn()
@@ -167,7 +180,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
                 if username == "Admin" && password == "Admin"
                 {
                     //log in success
-                    self.dismiss(animated: true, completion: nil)
+                    
+                    if self.rememberMe
+                    {
+                        CacheManager.singleton.SaveUsername(username: username!)
+                    }
+                    
+                    Dismiss()
                     self.ResetTextFields()
                 }
                 else
@@ -204,8 +223,13 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
                 
                 if success{
                     //log in success
-                    self.dismiss(animated: true, completion: nil)
+                    self.Dismiss()
                     self.ResetTextFields()
+                    
+                    if self.rememberMe
+                    {
+                        CacheManager.singleton.SaveUsername(username: username!)
+                    }
 
                 }
                 else
@@ -247,15 +271,27 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
         }
     }
     
+    func SignInTimeOut()
+    {
+        
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         SignIn()
         return false
     }
     
+    func Present()
+    {
+        let window = UIApplication.shared.delegate?.window!!
+        window?.rootViewController = self
+    }
+    
     func Dismiss()
     {
-        self.dismiss(animated: true, completion: nil)
+        let mainWindow = UIApplication.shared.delegate?.window!!
+        mainWindow?.rootViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateInitialViewController()
     }
     
     func ForgotPasswordButtonPressed()
@@ -263,10 +299,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
         
     }
     
-    func CreateAccountButtonPressed()
-    {
-        self.present(NewAccountFormViewController.singleton, animated: true,completion: nil)
-    }
     
     func ResetTextFields()
     {

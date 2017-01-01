@@ -7,14 +7,52 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A401DB961E039597003C5F95 /* ExtensionsAndStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DB951E039597003C5F95 /* ExtensionsAndStructs.swift */; };
+		A401DB981E03DFAC003C5F95 /* BarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DB971E03DFAC003C5F95 /* BarManager.swift */; };
+		A401DB9A1E054A0A003C5F95 /* OpeningHoursPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DB991E054A0A003C5F95 /* OpeningHoursPickerView.swift */; };
+		A4381B3D1E0B781C0086B41F /* ChooseLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4381B3B1E0B781C0086B41F /* ChooseLocationViewController.swift */; };
+		A4381B3E1E0B781C0086B41F /* ChooseLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4381B3C1E0B781C0086B41F /* ChooseLocationViewController.xib */; };
+		A4381B471E0B793F0086B41F /* EditDiscountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4381B451E0B793F0086B41F /* EditDiscountsViewController.swift */; };
+		A4381B481E0B793F0086B41F /* EditDiscountsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4381B461E0B793F0086B41F /* EditDiscountsViewController.xib */; };
+		A4381B4B1E0B79520086B41F /* EditReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4381B491E0B79520086B41F /* EditReservationsViewController.swift */; };
+		A4381B4C1E0B79520086B41F /* EditReservationsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4381B4A1E0B79520086B41F /* EditReservationsViewController.xib */; };
+		A4381B4F1E0BDC2E0086B41F /* DiscountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4381B4E1E0BDC2E0086B41F /* DiscountManager.swift */; };
+		A4381B521E0CE2550086B41F /* EditDetailDiscountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4381B501E0CE2550086B41F /* EditDetailDiscountViewController.swift */; };
+		A4381B531E0CE2550086B41F /* EditDetailDiscountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4381B511E0CE2550086B41F /* EditDetailDiscountViewController.xib */; };
 		A439FFAE1DF6742B005BFAC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFAD1DF6742B005BFAC4 /* AppDelegate.swift */; };
-		A439FFB01DF6742B005BFAC4 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFAF1DF6742B005BFAC4 /* FirstViewController.swift */; };
-		A439FFB21DF6742B005BFAC4 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFB11DF6742B005BFAC4 /* SecondViewController.swift */; };
 		A439FFB51DF6742B005BFAC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A439FFB31DF6742B005BFAC4 /* Main.storyboard */; };
 		A439FFB71DF6742B005BFAC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A439FFB61DF6742B005BFAC4 /* Assets.xcassets */; };
 		A439FFBA1DF6742B005BFAC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A439FFB81DF6742B005BFAC4 /* LaunchScreen.storyboard */; };
 		A439FFC51DF6742B005BFAC4 /* AfterDark_MerchantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFC41DF6742B005BFAC4 /* AfterDark_MerchantTests.swift */; };
 		A439FFD01DF6742B005BFAC4 /* AfterDark_MerchantUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFCF1DF6742B005BFAC4 /* AfterDark_MerchantUITests.swift */; };
+		A439FFDE1DF674C3005BFAC4 /* QrCodeCaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFDD1DF674C3005BFAC4 /* QrCodeCaptureView.swift */; };
+		A439FFE01DF68845005BFAC4 /* PopupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFDF1DF68845005BFAC4 /* PopupManager.swift */; };
+		A439FFE31DF68B6C005BFAC4 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFE11DF68B6C005BFAC4 /* Account.swift */; };
+		A439FFE41DF68B6C005BFAC4 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFE21DF68B6C005BFAC4 /* Network.swift */; };
+		A439FFE61DF68B96005BFAC4 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFE51DF68B96005BFAC4 /* Settings.swift */; };
+		A439FFEE1DF6901B005BFAC4 /* Sizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFED1DF6901B005BFAC4 /* Sizing.swift */; };
+		A439FFF21DF6C18F005BFAC4 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFF11DF6C18F005BFAC4 /* QRCodeScannerViewController.swift */; };
+		A439FFF41DF6C4BE005BFAC4 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFF31DF6C4BE005BFAC4 /* SettingsTableViewController.swift */; };
+		A439FFF71DF6C611005BFAC4 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFF51DF6C611005BFAC4 /* AccountViewController.swift */; };
+		A473F98A1E1956D400F640F9 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473F9891E1956D400F640F9 /* CacheManager.swift */; };
+		A473F98D1E195E7F00F640F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473F98B1E195E7F00F640F9 /* LoginViewController.swift */; };
+		A473F98E1E195E7F00F640F9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A473F98C1E195E7F00F640F9 /* LoginViewController.xib */; };
+		A473F98F1E195FC700F640F9 /* Champagne & Limousines.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A473F97F1E19554C00F640F9 /* Champagne & Limousines.ttf */; };
+		A473F9901E195FC900F640F9 /* Mohave-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9801E19554C00F640F9 /* Mohave-Bold.otf */; };
+		A473F9911E195FCC00F640F9 /* Mohave Italics.otf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9811E19554C00F640F9 /* Mohave Italics.otf */; };
+		A473F9921E195FCC00F640F9 /* Mohave-Bold Italics.otf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9821E19554C00F640F9 /* Mohave-Bold Italics.otf */; };
+		A473F9931E195FCC00F640F9 /* Mohave-SemiBold Italics.otf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9831E19554C00F640F9 /* Mohave-SemiBold Italics.otf */; };
+		A473F9941E195FCC00F640F9 /* Mohave-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9841E19554C00F640F9 /* Mohave-SemiBold.otf */; };
+		A473F9951E195FCC00F640F9 /* Mohave.otf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9851E19554C00F640F9 /* Mohave.otf */; };
+		A473F9961E195FCC00F640F9 /* BEBAS___.TTF in Resources */ = {isa = PBXBuildFile; fileRef = A473F9861E19554C00F640F9 /* BEBAS___.TTF */; };
+		A473F9971E195FCC00F640F9 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9871E19554C00F640F9 /* Montserrat-Bold.ttf */; };
+		A473F9981E195FCC00F640F9 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9881E19554C00F640F9 /* Montserrat-Regular.ttf */; };
+		A47CF81D1DF7D0A000C33FE4 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF81C1DF7D0A000C33FE4 /* MenuViewController.swift */; };
+		A47CF8201E0029AA00C33FE4 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF81E1E0029AA00C33FE4 /* EditProfileViewController.swift */; };
+		A47CF8211E0029AA00C33FE4 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47CF81F1E0029AA00C33FE4 /* EditProfileViewController.xib */; };
+		A47CF8241E00F43500C33FE4 /* Bar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF8221E00F43500C33FE4 /* Bar.swift */; };
+		A47CF8251E00F43500C33FE4 /* Discount.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF8231E00F43500C33FE4 /* Discount.swift */; };
+		A47CF8281E00F86900C33FE4 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF8271E00F86900C33FE4 /* Review.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +73,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A401DB951E039597003C5F95 /* ExtensionsAndStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionsAndStructs.swift; sourceTree = "<group>"; };
+		A401DB971E03DFAC003C5F95 /* BarManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarManager.swift; sourceTree = "<group>"; };
+		A401DB991E054A0A003C5F95 /* OpeningHoursPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpeningHoursPickerView.swift; path = ../OpeningHoursPickerView.swift; sourceTree = "<group>"; };
+		A4381B3B1E0B781C0086B41F /* ChooseLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLocationViewController.swift; sourceTree = "<group>"; };
+		A4381B3C1E0B781C0086B41F /* ChooseLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseLocationViewController.xib; sourceTree = "<group>"; };
+		A4381B451E0B793F0086B41F /* EditDiscountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDiscountsViewController.swift; sourceTree = "<group>"; };
+		A4381B461E0B793F0086B41F /* EditDiscountsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDiscountsViewController.xib; sourceTree = "<group>"; };
+		A4381B491E0B79520086B41F /* EditReservationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditReservationsViewController.swift; sourceTree = "<group>"; };
+		A4381B4A1E0B79520086B41F /* EditReservationsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditReservationsViewController.xib; sourceTree = "<group>"; };
+		A4381B4E1E0BDC2E0086B41F /* DiscountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscountManager.swift; sourceTree = "<group>"; };
+		A4381B501E0CE2550086B41F /* EditDetailDiscountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDetailDiscountViewController.swift; sourceTree = "<group>"; };
+		A4381B511E0CE2550086B41F /* EditDetailDiscountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDetailDiscountViewController.xib; sourceTree = "<group>"; };
 		A439FFAA1DF6742B005BFAC4 /* AfterDark Merchant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AfterDark Merchant.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A439FFAD1DF6742B005BFAC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A439FFAF1DF6742B005BFAC4 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		A439FFB11DF6742B005BFAC4 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		A439FFB41DF6742B005BFAC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A439FFB61DF6742B005BFAC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A439FFB91DF6742B005BFAC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +97,34 @@
 		A439FFCB1DF6742B005BFAC4 /* AfterDark MerchantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AfterDark MerchantUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A439FFCF1DF6742B005BFAC4 /* AfterDark_MerchantUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterDark_MerchantUITests.swift; sourceTree = "<group>"; };
 		A439FFD11DF6742B005BFAC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A439FFDD1DF674C3005BFAC4 /* QrCodeCaptureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QrCodeCaptureView.swift; sourceTree = "<group>"; };
+		A439FFDF1DF68845005BFAC4 /* PopupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupManager.swift; sourceTree = "<group>"; };
+		A439FFE11DF68B6C005BFAC4 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		A439FFE21DF68B6C005BFAC4 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		A439FFE51DF68B96005BFAC4 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		A439FFED1DF6901B005BFAC4 /* Sizing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sizing.swift; sourceTree = "<group>"; };
+		A439FFF11DF6C18F005BFAC4 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		A439FFF31DF6C4BE005BFAC4 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		A439FFF51DF6C611005BFAC4 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		A473F97F1E19554C00F640F9 /* Champagne & Limousines.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Champagne & Limousines.ttf"; sourceTree = "<group>"; };
+		A473F9801E19554C00F640F9 /* Mohave-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mohave-Bold.otf"; sourceTree = "<group>"; };
+		A473F9811E19554C00F640F9 /* Mohave Italics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mohave Italics.otf"; sourceTree = "<group>"; };
+		A473F9821E19554C00F640F9 /* Mohave-Bold Italics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mohave-Bold Italics.otf"; sourceTree = "<group>"; };
+		A473F9831E19554C00F640F9 /* Mohave-SemiBold Italics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mohave-SemiBold Italics.otf"; sourceTree = "<group>"; };
+		A473F9841E19554C00F640F9 /* Mohave-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mohave-SemiBold.otf"; sourceTree = "<group>"; };
+		A473F9851E19554C00F640F9 /* Mohave.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Mohave.otf; sourceTree = "<group>"; };
+		A473F9861E19554C00F640F9 /* BEBAS___.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BEBAS___.TTF"; sourceTree = "<group>"; };
+		A473F9871E19554C00F640F9 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		A473F9881E19554C00F640F9 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		A473F9891E1956D400F640F9 /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		A473F98B1E195E7F00F640F9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A473F98C1E195E7F00F640F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		A47CF81C1DF7D0A000C33FE4 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		A47CF81E1E0029AA00C33FE4 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		A47CF81F1E0029AA00C33FE4 /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
+		A47CF8221E00F43500C33FE4 /* Bar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
+		A47CF8231E00F43500C33FE4 /* Discount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Discount.swift; sourceTree = "<group>"; };
+		A47CF8271E00F86900C33FE4 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,9 +152,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A4381B3F1E0B79010086B41F /* Edit Description */ = {
+			isa = PBXGroup;
+			children = (
+				A4381B3B1E0B781C0086B41F /* ChooseLocationViewController.swift */,
+				A4381B3C1E0B781C0086B41F /* ChooseLocationViewController.xib */,
+				A47CF81E1E0029AA00C33FE4 /* EditProfileViewController.swift */,
+				A47CF81F1E0029AA00C33FE4 /* EditProfileViewController.xib */,
+			);
+			name = "Edit Description";
+			sourceTree = "<group>";
+		};
+		A4381B441E0B79270086B41F /* Edit Reservations */ = {
+			isa = PBXGroup;
+			children = (
+				A4381B491E0B79520086B41F /* EditReservationsViewController.swift */,
+				A4381B4A1E0B79520086B41F /* EditReservationsViewController.xib */,
+			);
+			name = "Edit Reservations";
+			sourceTree = "<group>";
+		};
+		A4381B4D1E0B795F0086B41F /* Edit Discounts */ = {
+			isa = PBXGroup;
+			children = (
+				A4381B451E0B793F0086B41F /* EditDiscountsViewController.swift */,
+				A4381B461E0B793F0086B41F /* EditDiscountsViewController.xib */,
+				A4381B501E0CE2550086B41F /* EditDetailDiscountViewController.swift */,
+				A4381B511E0CE2550086B41F /* EditDetailDiscountViewController.xib */,
+			);
+			name = "Edit Discounts";
+			sourceTree = "<group>";
+		};
 		A439FFA11DF6742A005BFAC4 = {
 			isa = PBXGroup;
 			children = (
+				A473F97F1E19554C00F640F9 /* Champagne & Limousines.ttf */,
+				A473F9801E19554C00F640F9 /* Mohave-Bold.otf */,
+				A473F9811E19554C00F640F9 /* Mohave Italics.otf */,
+				A473F9821E19554C00F640F9 /* Mohave-Bold Italics.otf */,
+				A473F9831E19554C00F640F9 /* Mohave-SemiBold Italics.otf */,
+				A473F9841E19554C00F640F9 /* Mohave-SemiBold.otf */,
+				A473F9851E19554C00F640F9 /* Mohave.otf */,
+				A473F9861E19554C00F640F9 /* BEBAS___.TTF */,
+				A473F9871E19554C00F640F9 /* Montserrat-Bold.ttf */,
+				A473F9881E19554C00F640F9 /* Montserrat-Regular.ttf */,
 				A439FFAC1DF6742B005BFAC4 /* AfterDark Merchant */,
 				A439FFC31DF6742B005BFAC4 /* AfterDark MerchantTests */,
 				A439FFCE1DF6742B005BFAC4 /* AfterDark MerchantUITests */,
@@ -100,9 +217,13 @@
 			isa = PBXGroup;
 			children = (
 				A439FFAD1DF6742B005BFAC4 /* AppDelegate.swift */,
-				A439FFAF1DF6742B005BFAC4 /* FirstViewController.swift */,
-				A439FFB11DF6742B005BFAC4 /* SecondViewController.swift */,
+				A439FFF01DF69043005BFAC4 /* View Controllers */,
+				A439FFEF1DF6902C005BFAC4 /* Managers */,
+				A401DB991E054A0A003C5F95 /* OpeningHoursPickerView.swift */,
+				A473F98B1E195E7F00F640F9 /* LoginViewController.swift */,
+				A473F98C1E195E7F00F640F9 /* LoginViewController.xib */,
 				A439FFB31DF6742B005BFAC4 /* Main.storyboard */,
+				A439FFDD1DF674C3005BFAC4 /* QrCodeCaptureView.swift */,
 				A439FFB61DF6742B005BFAC4 /* Assets.xcassets */,
 				A439FFB81DF6742B005BFAC4 /* LaunchScreen.storyboard */,
 				A439FFBB1DF6742B005BFAC4 /* Info.plist */,
@@ -126,6 +247,55 @@
 				A439FFD11DF6742B005BFAC4 /* Info.plist */,
 			);
 			path = "AfterDark MerchantUITests";
+			sourceTree = "<group>";
+		};
+		A439FFEF1DF6902C005BFAC4 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A439FFE11DF68B6C005BFAC4 /* Account.swift */,
+				A473F9891E1956D400F640F9 /* CacheManager.swift */,
+				A401DB971E03DFAC003C5F95 /* BarManager.swift */,
+				A4381B4E1E0BDC2E0086B41F /* DiscountManager.swift */,
+				A439FFE51DF68B96005BFAC4 /* Settings.swift */,
+				A439FFE21DF68B6C005BFAC4 /* Network.swift */,
+				A439FFED1DF6901B005BFAC4 /* Sizing.swift */,
+				A439FFDF1DF68845005BFAC4 /* PopupManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		A439FFF01DF69043005BFAC4 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A439FFF91DF6C61B005BFAC4 /* Main */,
+				A439FFF51DF6C611005BFAC4 /* AccountViewController.swift */,
+				A4381B4D1E0B795F0086B41F /* Edit Discounts */,
+				A4381B441E0B79270086B41F /* Edit Reservations */,
+				A4381B3F1E0B79010086B41F /* Edit Description */,
+				A47CF8261E00F43A00C33FE4 /* Objects */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		A439FFF91DF6C61B005BFAC4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A47CF81C1DF7D0A000C33FE4 /* MenuViewController.swift */,
+				A439FFF11DF6C18F005BFAC4 /* QRCodeScannerViewController.swift */,
+				A439FFF31DF6C4BE005BFAC4 /* SettingsTableViewController.swift */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		A47CF8261E00F43A00C33FE4 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				A401DB951E039597003C5F95 /* ExtensionsAndStructs.swift */,
+				A47CF8271E00F86900C33FE4 /* Review.swift */,
+				A47CF8221E00F43500C33FE4 /* Bar.swift */,
+				A47CF8231E00F43500C33FE4 /* Discount.swift */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,9 +408,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4381B481E0B793F0086B41F /* EditDiscountsViewController.xib in Resources */,
+				A473F9951E195FCC00F640F9 /* Mohave.otf in Resources */,
+				A4381B4C1E0B79520086B41F /* EditReservationsViewController.xib in Resources */,
+				A4381B3E1E0B781C0086B41F /* ChooseLocationViewController.xib in Resources */,
+				A4381B531E0CE2550086B41F /* EditDetailDiscountViewController.xib in Resources */,
+				A473F9921E195FCC00F640F9 /* Mohave-Bold Italics.otf in Resources */,
+				A473F9961E195FCC00F640F9 /* BEBAS___.TTF in Resources */,
+				A473F9981E195FCC00F640F9 /* Montserrat-Regular.ttf in Resources */,
 				A439FFBA1DF6742B005BFAC4 /* LaunchScreen.storyboard in Resources */,
+				A473F9901E195FC900F640F9 /* Mohave-Bold.otf in Resources */,
+				A473F9941E195FCC00F640F9 /* Mohave-SemiBold.otf in Resources */,
+				A47CF8211E0029AA00C33FE4 /* EditProfileViewController.xib in Resources */,
+				A473F98F1E195FC700F640F9 /* Champagne & Limousines.ttf in Resources */,
 				A439FFB71DF6742B005BFAC4 /* Assets.xcassets in Resources */,
 				A439FFB51DF6742B005BFAC4 /* Main.storyboard in Resources */,
+				A473F9971E195FCC00F640F9 /* Montserrat-Bold.ttf in Resources */,
+				A473F9911E195FCC00F640F9 /* Mohave Italics.otf in Resources */,
+				A473F98E1E195E7F00F640F9 /* LoginViewController.xib in Resources */,
+				A473F9931E195FCC00F640F9 /* Mohave-SemiBold Italics.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,9 +451,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A439FFB21DF6742B005BFAC4 /* SecondViewController.swift in Sources */,
+				A47CF8201E0029AA00C33FE4 /* EditProfileViewController.swift in Sources */,
+				A47CF8241E00F43500C33FE4 /* Bar.swift in Sources */,
+				A401DB961E039597003C5F95 /* ExtensionsAndStructs.swift in Sources */,
+				A4381B471E0B793F0086B41F /* EditDiscountsViewController.swift in Sources */,
+				A439FFEE1DF6901B005BFAC4 /* Sizing.swift in Sources */,
+				A439FFE01DF68845005BFAC4 /* PopupManager.swift in Sources */,
+				A4381B4B1E0B79520086B41F /* EditReservationsViewController.swift in Sources */,
+				A439FFF71DF6C611005BFAC4 /* AccountViewController.swift in Sources */,
+				A4381B4F1E0BDC2E0086B41F /* DiscountManager.swift in Sources */,
+				A4381B521E0CE2550086B41F /* EditDetailDiscountViewController.swift in Sources */,
+				A473F98A1E1956D400F640F9 /* CacheManager.swift in Sources */,
+				A439FFE61DF68B96005BFAC4 /* Settings.swift in Sources */,
 				A439FFAE1DF6742B005BFAC4 /* AppDelegate.swift in Sources */,
-				A439FFB01DF6742B005BFAC4 /* FirstViewController.swift in Sources */,
+				A473F98D1E195E7F00F640F9 /* LoginViewController.swift in Sources */,
+				A47CF8251E00F43500C33FE4 /* Discount.swift in Sources */,
+				A47CF8281E00F86900C33FE4 /* Review.swift in Sources */,
+				A401DB981E03DFAC003C5F95 /* BarManager.swift in Sources */,
+				A439FFF21DF6C18F005BFAC4 /* QRCodeScannerViewController.swift in Sources */,
+				A47CF81D1DF7D0A000C33FE4 /* MenuViewController.swift in Sources */,
+				A439FFF41DF6C4BE005BFAC4 /* SettingsTableViewController.swift in Sources */,
+				A439FFDE1DF674C3005BFAC4 /* QrCodeCaptureView.swift in Sources */,
+				A401DB9A1E054A0A003C5F95 /* OpeningHoursPickerView.swift in Sources */,
+				A439FFE41DF68B6C005BFAC4 /* Network.swift in Sources */,
+				A4381B3D1E0B781C0086B41F /* ChooseLocationViewController.swift in Sources */,
+				A439FFE31DF68B6C005BFAC4 /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +629,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D6W5DP48V9;
 				INFOPLIST_FILE = "AfterDark Merchant/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "kohbroco.AfterDark-Merchant";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -434,6 +643,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D6W5DP48V9;
 				INFOPLIST_FILE = "AfterDark Merchant/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "kohbroco.AfterDark-Merchant";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -518,6 +728,7 @@
 				A439FFD61DF6742B005BFAC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A439FFD71DF6742B005BFAC4 /* Build configuration list for PBXNativeTarget "AfterDark MerchantTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +737,7 @@
 				A439FFD91DF6742B005BFAC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A439FFDA1DF6742B005BFAC4 /* Build configuration list for PBXNativeTarget "AfterDark MerchantUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +746,7 @@
 				A439FFDC1DF6742B005BFAC4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

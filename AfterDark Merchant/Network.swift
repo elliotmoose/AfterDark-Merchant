@@ -9,12 +9,14 @@ class Network {
     
     //Urls
     //static let domain = "http://mooselliot.net23.net/"
-    static let domain = "http://localhost/AfterDarkServer/"
-    
+    static let domain = "http://localhost/AfterDarkServer/Merchant/"
+    static let clientDomain = "http://localhost/AfterDarkServer/"
+
     
     init()
     {
         session = URLSession.shared
+        session.configuration.timeoutIntervalForRequest = 10
     }
     
     //Load Method
@@ -37,6 +39,12 @@ class Network {
             {
                 DispatchQueue.main.async {
                     handler(true,data)
+                }
+            }
+            else
+            {
+                DispatchQueue.main.async {
+                    handler(false,nil)
                 }
             }
             
@@ -66,6 +74,12 @@ class Network {
                 let outString = String(data: data, encoding: String.Encoding.utf8)
                 DispatchQueue.main.async {
                     handler(true,outString)
+                }
+            }
+            else
+            {
+                DispatchQueue.main.async {
+                    handler(false,nil)
                 }
             }
             
@@ -105,6 +119,12 @@ class Network {
                     handler(true,outString)
                 }
             }
+            else
+            {
+                DispatchQueue.main.async {
+                    handler(false,nil)
+                }
+            }
             
         }
         
@@ -140,6 +160,12 @@ class Network {
                     handler(true,data)
                 }
             }
+            else
+            {
+                DispatchQueue.main.async {
+                    handler(false,nil)
+                }
+            }
             
         }
         
@@ -169,6 +195,12 @@ class Network {
                 DispatchQueue.main.async {
                     handler(true,Network.JsonDataToDictArray(out))
                     
+                }
+            }
+            else
+            {
+                DispatchQueue.main.async {
+                    handler(false,[])
                 }
             }
             

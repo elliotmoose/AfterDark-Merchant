@@ -65,6 +65,8 @@ class QrCodeCaptureView: UIView , AVCaptureMetadataOutputObjectsDelegate {
         //session
         InitCaptureSession(input: input!, output: output)
         
+
+        
         //==================================================================================================
         //                                      init camera display
         //==================================================================================================
@@ -92,11 +94,7 @@ class QrCodeCaptureView: UIView , AVCaptureMetadataOutputObjectsDelegate {
     {
         //init output
         let captureMetadataOutput = AVCaptureMetadataOutput()
-        // Set delegate and queue for callback
-        captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        //set metadata type to lookout for (during video capture)
-        captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
-        
+
         return captureMetadataOutput
     }
     private func InitCaptureSession(input : AVCaptureDeviceInput, output : AVCaptureMetadataOutput)
@@ -109,10 +107,18 @@ class QrCodeCaptureView: UIView , AVCaptureMetadataOutputObjectsDelegate {
         
         // Set the output device on the capture session.
         captureSession?.addOutput(output)
+        
+        
+        //these must be done after adding it as an output
+        // Set delegate and queue for callback
+        output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+        //set metadata type to lookout for (during video capture)
+        output.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
     }
     
     private func InitPreviewDisplay()
     {
+        self.backgroundColor = UIColor.black
         // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
         videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         videoPreviewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill

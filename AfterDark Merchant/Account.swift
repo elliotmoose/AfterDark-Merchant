@@ -3,12 +3,14 @@ class Account {
     
     
     static let singleton = Account()
-    var user_name: String?
-    var user_ID :String?
-    var user_Email : String?
+    var Merchant_username: String?
+    var Merchant_ID :String?
+    var Merchant_Bar_ID : String?
+    var Merchant_Email : String?
+    var Merchant_Bar : Bar?
     
     init() {
-
+        Merchant_username = ""
         
     }
     
@@ -16,49 +18,110 @@ class Account {
     func Login(_ username:String,password:String,handler: @escaping (_ success:Bool,_ resultString : String)->Void)
     {
         let urlLogin = Network.domain + "Login.php"
-        let postParam = String("username=\(username)&password=\(password)")
+        let postParam = String("username=\(username.AddPercentEncodingForURL(plusForSpace: true)!)&password=\(password.AddPercentEncodingForURL(plusForSpace: true)!)")
         
         Network.singleton.DataFromUrlWithPost(urlLogin,postParam: postParam!,handler: {(success,output) -> Void in
             if let output = output
             {
                 
-                let mutableOut = (output as NSData).mutableCopy() as! NSMutableData
-
-                //output here is a dict array
-                let array = Network.JsonDataToDictArray(mutableOut)
-                
-                guard array.count > 0 else
+                do
                 {
-                    NSLog("Cant log in,check connection")
-                    return
+                    if let dict = try JSONSerialization.jsonObject(with: output, options: .allowFragments) as? NSDictionary
+                    {
+                        if let success = dict["success"] as? String
+                        {
+                            if success == "true"
+                            {
+                                
+                                if let merchantDetails = dict["detail"] as? NSDictionary
+                                {
+                                    guard let username = merchantDetails["Username"] as? String else {return}
+                                    guard let email = merchantDetails["Merchant_Email"] as? String else {return}
+                                    
+                                    if let ID = merchantDetails["Merchant_ID"] as? String
+                                    {
+                                        self.Merchant_ID = ID
+                                    }
+                                    else if let ID = merchantDetails["Merchant_ID"] as? Int
+                                    {
+                                        self.Merchant_ID = "\(ID)"
+                                    }
+                                    
+                                    if let barID = merchantDetails["Bar_ID"] as? String
+                                    {
+                                        self.Merchant_Bar_ID = barID
+                                    }
+                                    else if let barID = merchantDetails["Bar_ID"] as? Int
+                                    {
+                                        self.Merchant_Bar_ID = "\(barID)"
+                                    }
+                                    
+                                    self.Merchant_username = username
+                                    self.Merchant_Email = email
+                                }
+                                
+                                
+                                
+                                
+                                
+                                self.Save()
+                                
+                                DispatchQueue.main.async {
+                                    handler(true,"Login Success")
+                                }
+                            }
+                            else
+                            {
+                                if let detail = dict["detail"] as? String
+                                {
+                                    if detail == "Invalid Password"
+                                    {
+                                        DispatchQueue.main.async {
+                                            handler(false,"Invalid Password")
+                                        }
+                                    }
+                                    
+                                    if detail == "Invalid ID"
+                                    {
+                                        DispatchQueue.main.async {
+                                            handler(false,"Invalid Username")
+                                        }
+                                    }
+                                    
+                                    DispatchQueue.main.async {
+                                        handler(false,detail)
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    DispatchQueue.main.async {
+                                        handler(false,"Cant log in, server fault")
+                                    }
+                                }
+                                
+                            }
+                        }
+                        else
+                        {
+                            DispatchQueue.main.async {
+                                handler(false,"Cant log in, server fault")
+                            }
+                        }
+                    }
+                    else
+                    {
+                        
+                    }
                 }
-                let dict = array[0] 
-                
-                
-                let outputString = dict["result"] as! String
-                if outputString == "Login Success"
+                catch let error as NSError
                 {
-                    self.user_name = dict["User_Name"] as? String
-                    self.user_Email = dict["User_Email"] as? String
-                    self.user_ID = dict["User_ID"] as? String
-
-                    self.Save()
+                    print(error)
+                    DispatchQueue.main.async {
+                        let errorString = String(data: output, encoding: .utf8)
+                        handler(false,"Cant log in, server fault - \(errorString!)")
+                    }
                     
-                    DispatchQueue.main.async {
-                        handler(true,"Login Success")
-                    }
-                }
-                else if outputString == "Invalid Password"
-                {
-                    DispatchQueue.main.async {
-                        handler(false,"Invalid Password")
-                    }
-                }
-                else if outputString == "Invalid ID"
-                {
-                    DispatchQueue.main.async {
-                        handler(false,"Invalid Username")
-                    }
                 }
                 
             }
@@ -70,66 +133,76 @@ class Account {
             }
         })
     }
+//
+//    func CreateNewAccount(_ username: String, _ password: String, _ email: String, _ dateOfBirth : String, handler: @escaping (_ success : Bool, _ response: String, _ dictOut : NSDictionary)-> Void)
+//    {
+//
+//        
+//        
+//        
+//        let postParam = "username=\(username.AddPercentEncodingForURL(plusForSpace: true)!)&password=\(password.AddPercentEncodingForURL(plusForSpace: true)!)&email=\(email.AddPercentEncodingForURL(plusForSpace: true)!)&DOB=\(dateOfBirth.AddPercentEncodingForURL(plusForSpace: true)!)"
+//        let urlCreateAccount = Network.domain + "AddNewAccount.php"
+//        
+//        Network.singleton.DataFromUrlWithPost(urlCreateAccount,postParam: postParam,handler: {(success,output) -> Void in
+//        
+//            if let output = output
+//            {
+//                let jsonData = (output as NSData).mutableCopy() as! NSMutableData
+//                
+////                let stringData = String(data: jsonData as Data, encoding: .utf8)
+////                NSLog(stringData!)
+//                
+//                let dict = Network.JsonDataToDict(jsonData)
+//                
+//                if dict["success"] as! String == "false"
+//                {
+//                    let errorMessage = dict["detail"] as! String
+//                    DispatchQueue.main.async {
+//                        handler(false,errorMessage,dict)
+//                    }
+//                }
+//                
+//                if dict["success"] as! String == "true"
+//                {
+//                    DispatchQueue.main.async {
+//                        handler(true,"Account created",dict)
+//                    }
+//                    
+//                }
+//            }
+//            
+//            DispatchQueue.main.async {
+//                handler(false,"cant connect to server",dict)
+//            }
+//        
+//        })
+//    }
+    
+       
 
-    func CreateNewAccount(_ username: String, _ password: String, _ email: String, _ dateOfBirth : String, handler: @escaping (_ success : Bool, _ response: String, _ dictOut : NSDictionary)-> Void)
-    {
-
-        
-        
-        
-        let postParam = "username=\(username)&password=\(password)&email=\(email)&DOB=\(dateOfBirth)"
-        let urlCreateAccount = Network.domain + "AddNewAccount.php"
-        
-        Network.singleton.DataFromUrlWithPost(urlCreateAccount,postParam: postParam,handler: {(success,output) -> Void in
-        
-            if let output = output
-            {
-                let jsonData = (output as NSData).mutableCopy() as! NSMutableData
-                
-//                let stringData = String(data: jsonData as Data, encoding: .utf8)
-//                NSLog(stringData!)
-                
-                let dict = Network.JsonDataToDict(jsonData)
-                
-                if dict["success"] as! String == "false"
-                {
-                    let errorMessage = dict["detail"] as! String
-                    DispatchQueue.main.async {
-                        handler(false,errorMessage,dict)
-                    }
-                }
-                
-                if dict["success"] as! String == "true"
-                {
-                    DispatchQueue.main.async {
-                        handler(true,"Account created",dict)
-                    }
-                    
-                }
-            }
-        
-        })
-    }
     
     func LogOut()
     {
         let UD = UserDefaults.standard
         
-        user_name = ""
-        user_ID = ""
-        user_Email = ""
+        Merchant_username = ""
+        Merchant_ID = ""
+        Merchant_Email = ""
         
         UD.setValue("",forKey: "user_name")
         UD.setValue("",forKey: "User_ID")
         UD.setValue("",forKey: "User_Email")
+        UD.setValue("", forKey: "Bar_ID")
+
     }
     
 	func Save()
 	{
 	    let UD = UserDefaults.standard
-	    UD.setValue(user_name,forKey: "user_name")
-	    UD.setValue(user_ID,forKey: "User_ID")
-	    UD.setValue(user_Email,forKey: "User_Email")
+	    UD.setValue(Merchant_username,forKey: "user_name")
+	    UD.setValue(Merchant_ID,forKey: "User_ID")
+	    UD.setValue(Merchant_Email,forKey: "User_Email")
+        UD.setValue(Merchant_Bar_ID, forKey: "Bar_ID")
 	}
 
 	func Load()
@@ -139,10 +212,11 @@ class Account {
             
             let UD = UserDefaults.standard
             
-            self.user_name = UD.value(forKey: "user_name") as? String
+            self.Merchant_username = UD.value(forKey: "user_name") as? String
             
-            self.user_ID = UD.value(forKey: "User_ID") as? String
-            self.user_Email = UD.value(forKey: "User_Email") as? String
+            self.Merchant_ID = UD.value(forKey: "User_ID") as? String
+            self.Merchant_Email = UD.value(forKey: "User_Email") as? String
+            self.Merchant_Bar_ID = UD.value(forKey: "Bar_ID") as? String
         }
 	}
 }

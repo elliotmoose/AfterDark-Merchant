@@ -8,43 +8,34 @@
 
 import UIKit
 
-class AccountTableViewController: UITableViewController {
+class AccountViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
-    static let singleton = AccountTableViewController(nibName: "AccountTableViewController", bundle: Bundle.main)
+    static let singleton = AccountViewController()
+    
+    var tableView : UITableView?
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        Bundle.main.loadNibNamed(nibNameOrNil!, owner: self, options: nil)
         
-        
-        
+        self.tableView = UITableView(frame: self.view.frame,style: .grouped)
+
+        self.tableView?.delegate = self
+        self.tableView?.dataSource = self
+        self.view.addSubview(tableView!)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         
         if cell == nil
@@ -58,25 +49,33 @@ class AccountTableViewController: UITableViewController {
         default:
             break
         }
-
-
+        
+        
         return cell!
     }
     
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath {
         case IndexPath(row: 0, section: 0):
             
-            //log out back end
-            Account.singleton.LogOut()
-        
-            //push login page
-            let window = UIApplication.shared.delegate?.window!!
-            window?.rootViewController = LoginViewController.singleton
+            PopupManager.singleton.PopupWithCancel(title: "Log Out", body: "Are you sure you want to log out?", presentationViewCont: self, handler: {
+            
+                //log out back end
+                Account.singleton.LogOut()
+                
+                //push login page
+                LoginViewController.singleton.Present()
+                
+            })
+            
+
         default:
             break
         }
+    
+    
+            tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }

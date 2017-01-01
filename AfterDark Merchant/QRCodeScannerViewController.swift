@@ -8,28 +8,70 @@
 
 import UIKit
 
-class QRCodeScannerViewController: UIViewController {
+class QRCodeScannerViewController: UIViewController ,QrCodeViewDelegate{
 
+    var qrCodeView = QrCodeCaptureView()
+
+    var activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //qr code view frame
+        qrCodeView = QrCodeCaptureView.init(frame: self.view.frame)
+        
+        //color
+        qrCodeView.backgroundColor = UIColor.black
+        
+        //subviews
+        self.view.addSubview(qrCodeView)
+        
+        //delegates
+        qrCodeView.delegate = self
+        
+        
+        
+        //activity indicator
+        activityIndicator.color = UIColor.white
+        activityIndicator.tintColor = UIColor.white
+        activityIndicator.center = self.view.center
+        self.view.addSubview(activityIndicator)
+        
+        //activity indicator state
+        activityIndicator.alpha = 0
+        
+        
+
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        qrCodeView.BeginScan()
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillDisappear(_ animated: Bool) {
+        qrCodeView.StopScan()
     }
-    */
+    func QrCodeCaptured(output: String) {
+
+        //freeze display
+        qrCodeView.StopScan()
+        
+        //activity indicator
+        activityIndicator.alpha = 1
+        activityIndicator.startAnimating()
+        
+        //upload discount request -> when finish -> stop activity indicator
+        Network.singleton.DataFromUrlWithPost(Network.domain + "AddDiscountRequest.php?", postParam: output, handler: {
+            (success,output) -> Void in
+            
+            self.activityIndicator.alpha = 0
+            self.activityIndicator.stopAnimating()
+            
+            
+        
+        })
+        
+    }
+
 
 }
