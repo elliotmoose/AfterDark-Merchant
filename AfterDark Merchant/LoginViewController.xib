@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,7 +24,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="AfterDark_Merchant" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="2Cr-3z-AZP" id="uh2-zN-MEv"/>
-                <outlet property="createAccountButton" destination="N1T-AR-xlD" id="nSo-Vc-Ihj"/>
                 <outlet property="forgotPasswordButton" destination="kRw-UX-PmD" id="Kg0-Ky-dsg"/>
                 <outlet property="grayViewOverlay" destination="fAs-Qb-hpL" id="yaZ-U4-xh7"/>
                 <outlet property="loginIconImageView" destination="9Ib-Gj-4o0" id="Eos-wL-ueZ"/>
@@ -89,14 +88,6 @@
                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1T-AR-xlD">
-                                    <rect key="frame" x="63.5" y="445" width="248" height="30"/>
-                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="17"/>
-                                    <state key="normal" title="SIGN UP">
-                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AfterDarkIcon" translatesAutoresizingMaskIntoConstraints="NO" id="9Ib-Gj-4o0">
                                     <rect key="frame" x="147.5" y="123.5" width="80" height="80"/>
                                     <constraints>
@@ -143,16 +134,6 @@
                                         <constraint firstAttribute="width" secondItem="su4-8V-QAB" secondAttribute="height" multiplier="1:1" id="UD6-Be-icm"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Need An Account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VS1-WF-xmq">
-                                    <rect key="frame" x="112" y="428" width="151" height="15"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="15" id="Az8-Rb-Waj"/>
-                                        <constraint firstAttribute="width" constant="151" id="itv-aN-8qu"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="11"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k4J-BR-raj">
                                     <rect key="frame" x="63.5" y="363" width="106" height="20"/>
                                     <constraints>
@@ -177,16 +158,13 @@
                                 <constraint firstItem="k2H-aO-ery" firstAttribute="leading" secondItem="Ud9-mb-IZ1" secondAttribute="leading" id="4vC-rM-oW5"/>
                                 <constraint firstItem="9Ib-Gj-4o0" firstAttribute="centerX" secondItem="Ud9-mb-IZ1" secondAttribute="centerX" id="9Bl-st-AoH"/>
                                 <constraint firstItem="k2H-aO-ery" firstAttribute="top" secondItem="Ud9-mb-IZ1" secondAttribute="top" id="9du-wo-Hwo"/>
-                                <constraint firstItem="VS1-WF-xmq" firstAttribute="centerX" secondItem="Ud9-mb-IZ1" secondAttribute="centerX" id="B3h-ao-2PT"/>
                                 <constraint firstItem="9IS-Vu-HLv" firstAttribute="trailing" secondItem="LKN-Zc-109" secondAttribute="trailing" constant="10" id="Ccp-en-0MW"/>
                                 <constraint firstItem="k4J-BR-raj" firstAttribute="height" secondItem="kRw-UX-PmD" secondAttribute="height" id="EeB-3o-7Hh"/>
                                 <constraint firstItem="9Ib-Gj-4o0" firstAttribute="width" secondItem="fAs-Qb-hpL" secondAttribute="width" id="G97-PZ-OiZ"/>
-                                <constraint firstItem="N1T-AR-xlD" firstAttribute="leading" secondItem="trh-vy-lhG" secondAttribute="leading" id="Hzp-iW-C5n"/>
                                 <constraint firstItem="sDs-Gj-cqT" firstAttribute="leading" secondItem="LKN-Zc-109" secondAttribute="leading" id="Ibg-aO-YgN"/>
                                 <constraint firstItem="9Ib-Gj-4o0" firstAttribute="centerX" secondItem="fAs-Qb-hpL" secondAttribute="centerX" id="Il0-UQ-2lw"/>
                                 <constraint firstItem="sDs-Gj-cqT" firstAttribute="top" secondItem="fAs-Qb-hpL" secondAttribute="bottom" constant="22" id="S2x-Et-Z4v"/>
                                 <constraint firstItem="k4J-BR-raj" firstAttribute="leading" secondItem="su4-8V-QAB" secondAttribute="trailing" constant="-19" id="Teh-Cu-yzh"/>
-                                <constraint firstItem="N1T-AR-xlD" firstAttribute="top" secondItem="VS1-WF-xmq" secondAttribute="bottom" constant="2" id="VHo-vx-xp4"/>
                                 <constraint firstAttribute="bottom" secondItem="k2H-aO-ery" secondAttribute="bottom" id="Vve-DT-S0A"/>
                                 <constraint firstItem="trh-vy-lhG" firstAttribute="trailing" secondItem="VKr-yr-AvE" secondAttribute="trailing" id="Wf0-hd-7ng"/>
                                 <constraint firstItem="2Cr-3z-AZP" firstAttribute="centerY" secondItem="9Ib-Gj-4o0" secondAttribute="centerY" id="XhV-Ai-Aqg"/>
@@ -196,17 +174,14 @@
                                 <constraint firstItem="kRw-UX-PmD" firstAttribute="trailing" secondItem="VKr-yr-AvE" secondAttribute="trailing" id="cAK-kt-a1a"/>
                                 <constraint firstItem="VKr-yr-AvE" firstAttribute="trailing" secondItem="LKN-Zc-109" secondAttribute="trailing" id="f8P-tf-kVm"/>
                                 <constraint firstItem="LKN-Zc-109" firstAttribute="centerX" secondItem="Ud9-mb-IZ1" secondAttribute="centerX" id="fUY-ha-kCH"/>
-                                <constraint firstItem="N1T-AR-xlD" firstAttribute="top" secondItem="trh-vy-lhG" secondAttribute="bottom" constant="25" id="fbD-BF-flo"/>
                                 <constraint firstItem="su4-8V-QAB" firstAttribute="centerY" secondItem="k4J-BR-raj" secondAttribute="centerY" id="gB3-XG-iV1"/>
                                 <constraint firstItem="kRw-UX-PmD" firstAttribute="centerY" secondItem="k4J-BR-raj" secondAttribute="centerY" id="gFa-D2-8fm"/>
                                 <constraint firstItem="kRw-UX-PmD" firstAttribute="top" secondItem="VKr-yr-AvE" secondAttribute="bottom" constant="3" id="gsu-QZ-NO4"/>
                                 <constraint firstItem="9IS-Vu-HLv" firstAttribute="leading" secondItem="sDs-Gj-cqT" secondAttribute="trailing" constant="-5" id="jnL-fP-MXj"/>
                                 <constraint firstItem="trh-vy-lhG" firstAttribute="top" secondItem="VKr-yr-AvE" secondAttribute="bottom" constant="30" id="nEw-cP-bCE"/>
-                                <constraint firstItem="N1T-AR-xlD" firstAttribute="height" secondItem="trh-vy-lhG" secondAttribute="height" id="nzU-yi-n6K"/>
                                 <constraint firstItem="k4J-BR-raj" firstAttribute="leading" secondItem="VKr-yr-AvE" secondAttribute="leading" id="r5g-lw-yQb"/>
                                 <constraint firstAttribute="trailing" secondItem="k2H-aO-ery" secondAttribute="trailing" id="si9-nc-wYY"/>
                                 <constraint firstItem="trh-vy-lhG" firstAttribute="leading" secondItem="VKr-yr-AvE" secondAttribute="leading" id="tBh-DQ-DHd"/>
-                                <constraint firstItem="N1T-AR-xlD" firstAttribute="trailing" secondItem="trh-vy-lhG" secondAttribute="trailing" id="uOL-CR-Ajl"/>
                                 <constraint firstItem="sDs-Gj-cqT" firstAttribute="centerY" secondItem="9IS-Vu-HLv" secondAttribute="centerY" id="vDm-wh-26j"/>
                                 <constraint firstItem="LKN-Zc-109" firstAttribute="top" secondItem="9IS-Vu-HLv" secondAttribute="bottom" constant="15" id="y5n-Ib-ZIs"/>
                             </constraints>

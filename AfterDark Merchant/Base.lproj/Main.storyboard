@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -62,7 +62,7 @@
             <objects>
                 <navigationController id="kb3-sc-QGw" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="First" image="arrow" id="C7D-WG-eot"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oPu-5B-5CX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="oPu-5B-5CX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -78,8 +78,8 @@
         <scene sceneID="rGM-iC-vcb">
             <objects>
                 <navigationController id="Ra1-Mo-ubn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="arrow" id="6Xr-MC-Qnu"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aW0-11-nf1">
+                    <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="6Xr-MC-Qnu"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="aW0-11-nf1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -104,7 +104,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="QRCode" image="Marker-48" id="lQ1-16-N0B"/>
+                    <tabBarItem key="tabBarItem" title="QRCode" image="Camera" id="lQ1-16-N0B"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vr9-kg-QYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -132,7 +132,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Marker-48" width="48" height="48"/>
+        <image name="Camera" width="32" height="32"/>
+        <image name="Settings" width="30" height="30"/>
         <image name="arrow" width="40" height="40"/>
     </resources>
 </document>

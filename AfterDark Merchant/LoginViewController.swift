@@ -19,7 +19,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
     @IBOutlet weak var grayViewOverlay: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet weak var signInButton: UIButton!
 
     @IBOutlet weak var passwordTextField: UITextField!
@@ -151,7 +150,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
         rememberMeCheckBox.tintColor = UIColor.white
         
         signInButton.layer.cornerRadius = 5
-        createAccountButton.layer.cornerRadius = 5
     }
     
     func SignIn()
@@ -447,10 +445,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
     }
     
     func keyboardWillBeHidden(notification: NSNotification){
-        //Once keyboard disappears, restore original positions
-        var info = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, -keyboardSize!.height, 0.0)
+        let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets
         self.scrollView.isScrollEnabled = false

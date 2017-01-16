@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1929DE9AC9935EDF2F27C4A7 /* libPods-AfterDark Merchant.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB36ABCE28C7F7E18E529A68 /* libPods-AfterDark Merchant.a */; };
 		A401DB961E039597003C5F95 /* ExtensionsAndStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DB951E039597003C5F95 /* ExtensionsAndStructs.swift */; };
 		A401DB981E03DFAC003C5F95 /* BarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DB971E03DFAC003C5F95 /* BarManager.swift */; };
 		A401DB9A1E054A0A003C5F95 /* OpeningHoursPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401DB991E054A0A003C5F95 /* OpeningHoursPickerView.swift */; };
@@ -47,6 +48,7 @@
 		A473F9961E195FCC00F640F9 /* BEBAS___.TTF in Resources */ = {isa = PBXBuildFile; fileRef = A473F9861E19554C00F640F9 /* BEBAS___.TTF */; };
 		A473F9971E195FCC00F640F9 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9871E19554C00F640F9 /* Montserrat-Bold.ttf */; };
 		A473F9981E195FCC00F640F9 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A473F9881E19554C00F640F9 /* Montserrat-Regular.ttf */; };
+		A473F99A1E19FF8600F640F9 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473F9991E19FF8600F640F9 /* ColorManager.swift */; };
 		A47CF81D1DF7D0A000C33FE4 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF81C1DF7D0A000C33FE4 /* MenuViewController.swift */; };
 		A47CF8201E0029AA00C33FE4 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF81E1E0029AA00C33FE4 /* EditProfileViewController.swift */; };
 		A47CF8211E0029AA00C33FE4 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A47CF81F1E0029AA00C33FE4 /* EditProfileViewController.xib */; };
@@ -73,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		79AA3DDB7177CE52006A0E1C /* Pods-AfterDark Merchant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfterDark Merchant.release.xcconfig"; path = "Pods/Target Support Files/Pods-AfterDark Merchant/Pods-AfterDark Merchant.release.xcconfig"; sourceTree = "<group>"; };
 		A401DB951E039597003C5F95 /* ExtensionsAndStructs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionsAndStructs.swift; sourceTree = "<group>"; };
 		A401DB971E03DFAC003C5F95 /* BarManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarManager.swift; sourceTree = "<group>"; };
 		A401DB991E054A0A003C5F95 /* OpeningHoursPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpeningHoursPickerView.swift; path = ../OpeningHoursPickerView.swift; sourceTree = "<group>"; };
@@ -119,12 +122,15 @@
 		A473F9891E1956D400F640F9 /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		A473F98B1E195E7F00F640F9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A473F98C1E195E7F00F640F9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		A473F9991E19FF8600F640F9 /* ColorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		A47CF81C1DF7D0A000C33FE4 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		A47CF81E1E0029AA00C33FE4 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		A47CF81F1E0029AA00C33FE4 /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
 		A47CF8221E00F43500C33FE4 /* Bar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bar.swift; sourceTree = "<group>"; };
 		A47CF8231E00F43500C33FE4 /* Discount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Discount.swift; sourceTree = "<group>"; };
 		A47CF8271E00F86900C33FE4 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		BB36ABCE28C7F7E18E529A68 /* libPods-AfterDark Merchant.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AfterDark Merchant.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E526F0E10BB90877FC72D83D /* Pods-AfterDark Merchant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfterDark Merchant.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AfterDark Merchant/Pods-AfterDark Merchant.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1929DE9AC9935EDF2F27C4A7 /* libPods-AfterDark Merchant.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +159,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F6EDC6A0E22C7ECAE7F9F80 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BB36ABCE28C7F7E18E529A68 /* libPods-AfterDark Merchant.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		81822F12C588B6C51AC7BC4A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E526F0E10BB90877FC72D83D /* Pods-AfterDark Merchant.debug.xcconfig */,
+				79AA3DDB7177CE52006A0E1C /* Pods-AfterDark Merchant.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A4381B3F1E0B79010086B41F /* Edit Description */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +224,8 @@
 				A439FFC31DF6742B005BFAC4 /* AfterDark MerchantTests */,
 				A439FFCE1DF6742B005BFAC4 /* AfterDark MerchantUITests */,
 				A439FFAB1DF6742B005BFAC4 /* Products */,
+				81822F12C588B6C51AC7BC4A /* Pods */,
+				6F6EDC6A0E22C7ECAE7F9F80 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -220,6 +246,7 @@
 				A439FFF01DF69043005BFAC4 /* View Controllers */,
 				A439FFEF1DF6902C005BFAC4 /* Managers */,
 				A401DB991E054A0A003C5F95 /* OpeningHoursPickerView.swift */,
+				A473F9991E19FF8600F640F9 /* ColorManager.swift */,
 				A473F98B1E195E7F00F640F9 /* LoginViewController.swift */,
 				A473F98C1E195E7F00F640F9 /* LoginViewController.xib */,
 				A439FFB31DF6742B005BFAC4 /* Main.storyboard */,
@@ -305,9 +332,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A439FFD41DF6742B005BFAC4 /* Build configuration list for PBXNativeTarget "AfterDark Merchant" */;
 			buildPhases = (
+				33DAE2C2ADFCF9E5FDB381AB /* [CP] Check Pods Manifest.lock */,
 				A439FFA61DF6742B005BFAC4 /* Sources */,
 				A439FFA71DF6742B005BFAC4 /* Frameworks */,
 				A439FFA81DF6742B005BFAC4 /* Resources */,
+				325107788027D82D4C670BE5 /* [CP] Embed Pods Frameworks */,
+				2E65D691733B97605360D46C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -446,6 +476,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2E65D691733B97605360D46C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AfterDark Merchant/Pods-AfterDark Merchant-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		325107788027D82D4C670BE5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AfterDark Merchant/Pods-AfterDark Merchant-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		33DAE2C2ADFCF9E5FDB381AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A439FFA61DF6742B005BFAC4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -458,6 +536,7 @@
 				A439FFEE1DF6901B005BFAC4 /* Sizing.swift in Sources */,
 				A439FFE01DF68845005BFAC4 /* PopupManager.swift in Sources */,
 				A4381B4B1E0B79520086B41F /* EditReservationsViewController.swift in Sources */,
+				A473F99A1E19FF8600F640F9 /* ColorManager.swift in Sources */,
 				A439FFF71DF6C611005BFAC4 /* AccountViewController.swift in Sources */,
 				A4381B4F1E0BDC2E0086B41F /* DiscountManager.swift in Sources */,
 				A4381B521E0CE2550086B41F /* EditDetailDiscountViewController.swift in Sources */,
@@ -625,6 +704,7 @@
 		};
 		A439FFD51DF6742B005BFAC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E526F0E10BB90877FC72D83D /* Pods-AfterDark Merchant.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D6W5DP48V9;
@@ -639,6 +719,7 @@
 		};
 		A439FFD61DF6742B005BFAC4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79AA3DDB7177CE52006A0E1C /* Pods-AfterDark Merchant.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = D6W5DP48V9;

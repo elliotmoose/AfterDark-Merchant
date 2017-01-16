@@ -30,6 +30,8 @@
 			<string></string>
 		</dict>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) location use for maps</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mohave-Bold.otf</string>

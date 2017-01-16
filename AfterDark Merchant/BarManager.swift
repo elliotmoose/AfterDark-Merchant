@@ -25,7 +25,7 @@ class BarManager
                 Account.singleton.Merchant_Bar = merchantBar
                 
                 //in case its in edit, update display
-                EditProfileViewController.singleton.LoadUpdatingBar()
+                EditProfileViewController.singleton.LoadUpdatingBarFromAccounts()
                 EditProfileViewController.singleton.DisplayUpdatingBar()
                 
                 handler(true)
@@ -145,6 +145,10 @@ class BarManager
             newBar.contact = contact
         }
         
+        if let tags = dict["Bar_Tags"] as? String
+        {
+            newBar.tags = tags
+        }
         
         //get opening hours
         if let monday = dict["OH_Monday"] as? String
@@ -190,6 +194,11 @@ class BarManager
         if let loc_long = dict["Bar_Location_Longitude"] as? String
         {
             newBar.loc_long = Float(loc_long)!
+        }
+        
+        if let address = dict["Bar_Address"] as? String
+        {
+            newBar.address = address
         }
         
         if let bookingAvailable = dict.value(forKey: "Booking_Available") as? Int

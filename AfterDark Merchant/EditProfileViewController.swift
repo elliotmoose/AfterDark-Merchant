@@ -15,7 +15,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     var activeField : AnyObject?
     var isReloadingBar = false
     
-    var UpdatingBar : Bar?
+    var UpdatingBar = Bar()
     var urlParameters = [String]()
     let days = ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"]
 
@@ -57,6 +57,9 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     
     @IBOutlet weak var openingHoursUIView: UIView!
     
+    @IBOutlet weak var chooseLocationLabel: UILabel!
+    
+    
     
     let timePicker = OpeningHoursPickerView()
 
@@ -66,15 +69,13 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         let paramString = urlParameters.joined(separator: "&")
         let url = Network.domain + "UpdateBarDescription.php?" + paramString
         
-        let MerchID = Account.singleton.Merchant_ID
-        let MerchBarID = Account.singleton.Merchant_Bar_ID
-        let MerchUsername = Account.singleton.Merchant_username
-        
-        guard let _ = MerchID else {return}
-        guard let _ = MerchBarID else {return}
-        guard let _ = MerchUsername else {return}
+        guard let MerchID = Account.singleton.Merchant_ID else {return}
+        guard let MerchBarID = Account.singleton.Merchant_Bar_ID else {return}
+        guard let MerchUsername = Account.singleton.Merchant_username else {return}
 
-        let postParamString = "Bar_Owner_ID=\(MerchID!)&Bar_Owner_Name=\(MerchUsername!)&Bar_ID=\(MerchBarID!)" // not done
+        guard MerchBarID == UpdatingBar.ID else {NSLog("Updating Bar Not Initialized!!!");return}
+
+        let postParamString = "Bar_Owner_ID=\(MerchID)&Bar_Owner_Name=\(MerchUsername)&Bar_ID=\(MerchBarID)" // not done
         
         print(url)
         Network.singleton.DataFromUrlWithPost(url, postParam: postParamString, handler: {
@@ -82,9 +83,11 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
             
             if success
             {
+                
+                guard let _ = output else {return}
+                
                 do
                 {
-                    guard let _ = output else {return}
                     let dict = try JSONSerialization.jsonObject(with: output!, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
                     
                     let success = dict["success"] as? String
@@ -100,12 +103,8 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
 
                         
                         //*********** change updated bar to new updated
-                        let bar = Account.singleton.Merchant_Bar
-                        bar?.name = self.UpdatingBar!.name
-                        bar?.description = self.UpdatingBar!.description
-                        bar?.contact = self.UpdatingBar!.contact
-                        bar?.website = self.UpdatingBar!.website
-                        bar?.openClosingHours = self.UpdatingBar!.openClosingHours
+                        self.LoadUpdatingBarToAccounts()
+
                         
                         self.textDidChange()
                     }
@@ -187,10 +186,11 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         openingHoursIcon.image = openingHoursIcon.image?.withRenderingMode(.alwaysTemplate)
         locationIcon.image = locationIcon.image?.withRenderingMode(.alwaysTemplate)
 
-        contactIcon.tintColor = UIColor.black
-        websiteIcon.tintColor = UIColor.black
-        openingHoursIcon.tintColor = UIColor.black
-        locationIcon.tintColor = UIColor.black
+        let iconsColor = ColorManager.themeBright
+        contactIcon.tintColor = iconsColor
+        websiteIcon.tintColor = iconsColor
+        openingHoursIcon.tintColor = iconsColor
+        locationIcon.tintColor = iconsColor
         
         AddKeyboardToolBar()
         
@@ -203,10 +203,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         }
         
         
-        //NON - UI RELATED ====================================================================================
-        
-        //Init updating bar
-        UpdatingBar = Bar()
+
         
 
     
@@ -240,7 +237,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         //load and display information
         if Account.singleton.Merchant_Bar != nil
         {
-            LoadUpdatingBar()
+            LoadUpdatingBarFromAccounts()
             DisplayUpdatingBar()
         }
         
@@ -302,78 +299,78 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         
 //        var set = CharacterSet.urlQueryAllowed
 //        set.insert(charactersIn: "+&")
-        if Account.singleton.Merchant_Bar?.name != UpdatingBar?.name {
+        if Account.singleton.Merchant_Bar?.name != UpdatingBar.name {
             toUpdate = true
             
-            let param = "Bar_Name=\(UpdatingBar!.name.AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "Bar_Name=\(UpdatingBar.name.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.description != UpdatingBar?.description {
+        if Account.singleton.Merchant_Bar?.description != UpdatingBar.description {
             toUpdate = true
-            let param = "Bar_Description=\(UpdatingBar!.description.AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "Bar_Description=\(UpdatingBar.description.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.contact != UpdatingBar?.contact {
+        if Account.singleton.Merchant_Bar?.contact != UpdatingBar.contact {
             toUpdate = true
-            let param = "Bar_Contact=\(UpdatingBar!.contact.AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "Bar_Contact=\(UpdatingBar.contact.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.website != UpdatingBar?.website {
+        if Account.singleton.Merchant_Bar?.website != UpdatingBar.website {
             toUpdate = true
-            let param = "Bar_Wesbite=\(UpdatingBar!.website.AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "Bar_Wesbite=\(UpdatingBar.website.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.loc_lat != UpdatingBar?.loc_lat {
+        if Account.singleton.Merchant_Bar?.loc_lat != UpdatingBar.loc_lat {
             toUpdate = true
-            let param = "Bar_Location_Latitude=\(UpdatingBar!.loc_lat)"
+            let param = "Bar_Location_Latitude=\(UpdatingBar.loc_lat)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.loc_long != UpdatingBar?.loc_long {
+        if Account.singleton.Merchant_Bar?.loc_long != UpdatingBar.loc_long {
             toUpdate = true
-            let param = "Bar_Location_Longitude=\(UpdatingBar!.loc_long)"
+            let param = "Bar_Location_Longitude=\(UpdatingBar.loc_long)"
             urlParameters.append(param)
         }
         
-        if Account.singleton.Merchant_Bar?.openClosingHours[0] != UpdatingBar?.openClosingHours[0]
+        if Account.singleton.Merchant_Bar?.openClosingHours[0] != UpdatingBar.openClosingHours[0]
         {
             toUpdate = true
-            let param = "OH_Monday=\(UpdatingBar!.openClosingHours[0].AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "OH_Monday=\(UpdatingBar.openClosingHours[0].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[1] != UpdatingBar?.openClosingHours[1]
+        if Account.singleton.Merchant_Bar?.openClosingHours[1] != UpdatingBar.openClosingHours[1]
         {
             toUpdate = true
-            let param = "OH_Tuesday=\(UpdatingBar!.openClosingHours[1].AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "OH_Tuesday=\(UpdatingBar.openClosingHours[1].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[2] != UpdatingBar?.openClosingHours[2]
+        if Account.singleton.Merchant_Bar?.openClosingHours[2] != UpdatingBar.openClosingHours[2]
         {
             toUpdate = true
-            let param = "OH_Wednesday=\(UpdatingBar!.openClosingHours[2].AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "OH_Wednesday=\(UpdatingBar.openClosingHours[2].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[3] != UpdatingBar?.openClosingHours[3]
+        if Account.singleton.Merchant_Bar?.openClosingHours[3] != UpdatingBar.openClosingHours[3]
         {
             toUpdate = true
-            let param = "OH_Thursday=\(UpdatingBar!.openClosingHours[3].AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "OH_Thursday=\(UpdatingBar.openClosingHours[3].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[4] != UpdatingBar?.openClosingHours[4]
+        if Account.singleton.Merchant_Bar?.openClosingHours[4] != UpdatingBar.openClosingHours[4]
         {
             toUpdate = true
-            let param = "OH_Friday=\(UpdatingBar!.openClosingHours[4].AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "OH_Friday=\(UpdatingBar.openClosingHours[4].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[5] != UpdatingBar?.openClosingHours[5]
+        if Account.singleton.Merchant_Bar?.openClosingHours[5] != UpdatingBar.openClosingHours[5]
         {
             toUpdate = true
-            let param = "OH_Saturday=\(UpdatingBar!.openClosingHours[5].AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "OH_Saturday=\(UpdatingBar.openClosingHours[5].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[6] != UpdatingBar?.openClosingHours[6]
+        if Account.singleton.Merchant_Bar?.openClosingHours[6] != UpdatingBar.openClosingHours[6]
         {
             toUpdate = true
-            let param = "OH_Sunday=\(UpdatingBar!.openClosingHours[6].AddPercentEncodingForURL(plusForSpace: true)!)"
+            let param = "OH_Sunday=\(UpdatingBar.openClosingHours[6].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
 
@@ -404,60 +401,70 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     func DisplayUpdatingBar()
     {
         let bar = UpdatingBar
-        barNameTextView.text = bar?.name
-        descriptionTextView.text = bar?.description
-        contactTextField.text = bar?.contact
-        websiteTextField.text = bar?.website
-        mondayTextField.text = "MONDAY:" + (bar?.openClosingHours[0])!
-        tuesdayTextField.text = "TUESDAY:" + (bar?.openClosingHours[1])!
-        wednesdayTextField.text = "WEDNESDAY:" + (bar?.openClosingHours[2])!
-        thursdayTextField.text = "THURSDAY:" + (bar?.openClosingHours[3])!
-        fridayTextField.text = "FRIDAY:" + (bar?.openClosingHours[4])!
-        saturdayTextField.text = "SATURDAY:" + (bar?.openClosingHours[5])!
-        sundayTextField.text = "SUNDAY:" + (bar?.openClosingHours[6])!
+        barNameTextView.text = bar.name
+        descriptionTextView.text = bar.description
+        contactTextField.text = bar.contact
+        websiteTextField.text = bar.website
+        mondayTextField.text = "MONDAY:" + bar.openClosingHours[0]
+        tuesdayTextField.text = "TUESDAY:" + bar.openClosingHours[1]
+        wednesdayTextField.text = "WEDNESDAY:" + bar.openClosingHours[2]
+        thursdayTextField.text = "THURSDAY:" + bar.openClosingHours[3]
+        fridayTextField.text = "FRIDAY:" + bar.openClosingHours[4]
+        saturdayTextField.text = "SATURDAY:" + bar.openClosingHours[5]
+        sundayTextField.text = "SUNDAY:" + bar.openClosingHours[6]
+        chooseLocationLabel.text = "Location: " + bar.address
     }
     
     func UpdateUpdatingBar()
     {
-        UpdatingBar?.name = barNameTextView.text!
-        UpdatingBar?.description = descriptionTextView.text!
-        UpdatingBar?.contact = contactTextField.text!
-        UpdatingBar?.website = websiteTextField.text!
+        UpdatingBar.name = barNameTextView.text!
+        UpdatingBar.description = descriptionTextView.text!
+        UpdatingBar.contact = contactTextField.text!
+        UpdatingBar.website = websiteTextField.text!
 
         //updating bar opening hours
-        UpdatingBar?.openClosingHours[0] = (mondayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[1] = (tuesdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[2] = (wednesdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[3] = (thursdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[4] = (fridayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[5] = (saturdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[6] = (sundayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[0] = (mondayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[1] = (tuesdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[2] = (wednesdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[3] = (thursdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[4] = (fridayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[5] = (saturdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[6] = (sundayTextField.text?.components(separatedBy: ":")[1])!
     }
 
-    func LoadUpdatingBar()
+    func LoadUpdatingBarFromAccounts()
     {
-        let Merchant_Bar = Account.singleton.Merchant_Bar
+        guard let Merchant_Bar = Account.singleton.Merchant_Bar else {return}
         
         
         
-        guard let _ = Merchant_Bar?.name else {print("Merchant does not have name");return}
-        UpdatingBar?.name = (Merchant_Bar?.name)!
-        guard let _ = Merchant_Bar?.description else {print("Merchant does not have description");return}
-        UpdatingBar?.description = (Merchant_Bar?.description)!
-        guard let _ = Merchant_Bar?.bookingAvailable else {print("Merchant does not have bookingavailable");return}
-        UpdatingBar?.bookingAvailable = (Merchant_Bar?.bookingAvailable)!
-        guard let _ = Merchant_Bar?.contact else {print("Merchant does not have contact");return}
-        UpdatingBar?.contact = (Merchant_Bar?.contact)!
-        guard let _ = Merchant_Bar?.website else {print("Merchant does not have website");return}
-        UpdatingBar?.website = (Merchant_Bar?.website)!
-        guard let _ = Merchant_Bar?.openClosingHours else {print("Merchant does not have openclosinghours");return}
-        UpdatingBar?.openClosingHours = (Merchant_Bar?.openClosingHours)!
-        guard let _ = Merchant_Bar?.loc_lat else {print("Merchant does not have loc lat");return}
-        UpdatingBar?.loc_lat = (Merchant_Bar?.loc_lat)!
-        guard let _ = Merchant_Bar?.loc_long else {print("Merchant does not have loc long");return}
-        UpdatingBar?.loc_long = (Merchant_Bar?.loc_long)!
+        UpdatingBar.name = Merchant_Bar.name
+        UpdatingBar.description = Merchant_Bar.description
+        UpdatingBar.bookingAvailable = Merchant_Bar.bookingAvailable
+        UpdatingBar.contact = Merchant_Bar.contact
+        UpdatingBar.website = Merchant_Bar.website
+        UpdatingBar.openClosingHours = Merchant_Bar.openClosingHours
+        UpdatingBar.loc_lat = Merchant_Bar.loc_lat
+        UpdatingBar.loc_long = Merchant_Bar.loc_long
+        UpdatingBar.address = Merchant_Bar.address
+
     }
     
+    func LoadUpdatingBarToAccounts()
+    {
+        if let bar = Account.singleton.Merchant_Bar
+        {
+            bar.name = self.UpdatingBar.name
+            bar.description = self.UpdatingBar.description
+            bar.bookingAvailable = self.UpdatingBar.bookingAvailable
+            bar.contact = self.UpdatingBar.contact
+            bar.website = self.UpdatingBar.website
+            bar.openClosingHours = self.UpdatingBar.openClosingHours
+            bar.loc_lat = self.UpdatingBar.loc_lat
+            bar.loc_long = self.UpdatingBar.loc_long
+            bar.address = self.UpdatingBar.address
+        }
+    }
     func TextUpdated()
     {
         //check if needs updating
@@ -610,13 +617,13 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         
         
         //updating bar opening hours
-        UpdatingBar?.openClosingHours[0] = (mondayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[1] = (tuesdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[2] = (wednesdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[3] = (thursdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[4] = (fridayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[5] = (saturdayTextField.text?.components(separatedBy: ":")[1])!
-        UpdatingBar?.openClosingHours[6] = (sundayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[0] = (mondayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[1] = (tuesdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[2] = (wednesdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[3] = (thursdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[4] = (fridayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[5] = (saturdayTextField.text?.components(separatedBy: ":")[1])!
+        UpdatingBar.openClosingHours[6] = (sundayTextField.text?.components(separatedBy: ":")[1])!
 
         
         TextUpdated()

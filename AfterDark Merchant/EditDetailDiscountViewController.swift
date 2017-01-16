@@ -339,8 +339,8 @@ class EditDetailDiscountViewController: UIViewController,UITextFieldDelegate,UIT
     
     func keyboardWillBeHidden(notification: NSNotification){
         //Once keyboard disappears, restore original positions
-        var info = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        //var info = notification.userInfo!
+        //let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
         let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
         self.scrollView.contentInset = contentInsets
         self.scrollView.contentOffset = CGPoint(x: 0, y: 0)

@@ -13,7 +13,7 @@ class Bar{
     var maxImageCount = -1
     
     var description : String = ""
-    
+    var tags : String = ""
     //contact
     var contact : String = ""
     var website : String = ""
@@ -21,6 +21,7 @@ class Bar{
     //location
     var loc_long : Float = 0
     var loc_lat : Float = 0
+    var address : String = ""
     
     //opening hours
     var openClosingHours = [String]()
@@ -48,7 +49,7 @@ class Bar{
         
     }
     
-    func populate(name : String, ID:String,rating:Rating,reviews:[Review],discounts : [Discount],icon : UIImage,images : [UIImage], maximagecount : Int, description : String, contact : String, website : String, loc_long : Float, loc_lat : Float)
+    func populate(name : String, ID:String,rating:Rating,reviews:[Review],discounts : [Discount],icon : UIImage,images : [UIImage], maximagecount : Int, description : String, contact : String, website : String, loc_long : Float, loc_lat : Float, address : String)
     {
         self.name = name
         self.ID = ID
@@ -63,6 +64,7 @@ class Bar{
         self.website = website
         self.loc_long = loc_long
         self.loc_lat = loc_lat
+        self.address = address
     }
     
     
