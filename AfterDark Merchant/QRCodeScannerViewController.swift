@@ -41,7 +41,12 @@ class QRCodeScannerViewController: UIViewController ,QrCodeViewDelegate{
         activityIndicator.alpha = 0
         
         
-
+        self.navigationController?.navigationBar.tintColor = ColorManager.themeBright
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.barStyle = .black;
+        
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Mohave", size: 20)!,NSForegroundColorAttributeName : ColorManager.themeBright]
     }
 
     override func viewWillAppear(_ animated: Bool) {

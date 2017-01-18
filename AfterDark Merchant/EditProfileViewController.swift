@@ -6,6 +6,29 @@
 //  Copyright © 2016 Kohbroco. All rights reserved.
 //
 
+/*
+ 
+    things to update if changing bar object:
+ 
+    NeedsUpdating()
+    UpdateUpdatingBar()
+    LoadUpdatingBarFromACCounts and ToAccounts
+    Barmanager newBarFromDict
+ 
+ 
+    Merchant_Bar.name
+    Merchant_Bar.ID
+    Merchant_Bar.description
+    Merchant_Bar.bookingAvailable
+    Merchant_Bar.contact
+    Merchant_Bar.website
+    Merchant_Bar.openClosingHours
+    Merchant_Bar.loc_lat
+    Merchant_Bar.loc_long
+    Merchant_Bar.address
+ 
+ */
+
 import UIKit
 
 class EditProfileViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate,OpeningHoursPickerDelegate {
@@ -59,6 +82,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     
     @IBOutlet weak var chooseLocationLabel: UILabel!
     
+    @IBOutlet weak var updateButtonBottomConstraint: NSLayoutConstraint!
     
     
     let timePicker = OpeningHoursPickerView()
@@ -179,6 +203,9 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         AddShadow(view: websiteTextField)
         AddShadow(view: openingHoursUIView)
         AddShadow(view: chooseLocationButton)
+        updateButton.layer.shadowOpacity = 0.6
+        updateButton.layer.shadowOffset = CGSize(width: 0, height: -2.5)
+        updateButton.layer.shadowRadius = 3
         
         //colors
         contactIcon.image = contactIcon.image?.withRenderingMode(.alwaysTemplate)
@@ -191,6 +218,10 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         websiteIcon.tintColor = iconsColor
         openingHoursIcon.tintColor = iconsColor
         locationIcon.tintColor = iconsColor
+
+        updateButton.setTitleColor(UIColor.darkGray, for: .disabled)
+        updateButton.setTitleColor(ColorManager.themeBright, for: .normal)
+
         
         AddKeyboardToolBar()
         
@@ -201,6 +232,8 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
             //delegates
             field.delegate = self
         }
+        
+
         
         
 
@@ -289,7 +322,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
 
     func NeedsUpdating() -> Bool
     {
-        guard UpdatingBar != nil else {NSLog("no bar in update?");return false}
+        guard UpdatingBar.name != "" else {NSLog("No Updating Bar Loaded");return false}
         guard Account.singleton.Merchant_Bar != nil else {NSLog("No bar loaded yet?");return false}
         
         var toUpdate = false
@@ -328,6 +361,12 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         if Account.singleton.Merchant_Bar?.loc_long != UpdatingBar.loc_long {
             toUpdate = true
             let param = "Bar_Location_Longitude=\(UpdatingBar.loc_long)"
+            urlParameters.append(param)
+        }
+
+        if Account.singleton.Merchant_Bar?.address != UpdatingBar.address {
+            toUpdate = true
+            let param = "Bar_Address=\(UpdatingBar.address)"
             urlParameters.append(param)
         }
         
@@ -439,6 +478,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         
         
         UpdatingBar.name = Merchant_Bar.name
+        UpdatingBar.ID = Merchant_Bar.ID
         UpdatingBar.description = Merchant_Bar.description
         UpdatingBar.bookingAvailable = Merchant_Bar.bookingAvailable
         UpdatingBar.contact = Merchant_Bar.contact
@@ -455,6 +495,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         if let bar = Account.singleton.Merchant_Bar
         {
             bar.name = self.UpdatingBar.name
+            bar.ID = self.UpdatingBar.ID
             bar.description = self.UpdatingBar.description
             bar.bookingAvailable = self.UpdatingBar.bookingAvailable
             bar.contact = self.UpdatingBar.contact
@@ -471,6 +512,8 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         if NeedsUpdating()
         {
             updateButton.isEnabled = true
+
+
         }
         else //grey out update button
         {
@@ -503,9 +546,18 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         {
             if textField == field
             {
-                let timeString = textField.text!.components(separatedBy: ":")[1]
+                let timeStringArr = textField.text!.components(separatedBy: ":")
                 
-                timePicker.LoadFromString(input: timeString)
+                if timeStringArr.count > 1
+                {
+                    timePicker.LoadFromString(input: timeStringArr[1])
+                }
+                else
+                {
+                    NSLog("ERROR: textfield doesnt contain \":\"")
+                }
+                
+                
             }
         }
     }
@@ -548,7 +600,6 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     func keyboardWillBeHidden(notification: NSNotification){
         //Once keyboard disappears, restore original positions
         var info = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
         let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
         self.scrollView.contentInset = contentInsets
         self.scrollView.contentOffset = CGPoint(x: 0, y: 0)

@@ -9,8 +9,10 @@ class Network {
     
     //Urls
     //static let domain = "http://mooselliot.net23.net/"
-    static let domain = "http://localhost/AfterDarkServer/Merchant/"
-    static let clientDomain = "http://localhost/AfterDarkServer/"
+//    static let domain = "http://localhost/AfterDarkServer/Merchant/"
+//    static let clientDomain = "http://localhost/AfterDarkServer/"
+    static let domain = "http://mooselliot.com/AfterDarkServer/Merchant/"
+    static let clientDomain = "http://mooselliot.com/AfterDarkServer/"
 
     
     init()

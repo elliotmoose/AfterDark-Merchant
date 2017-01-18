@@ -28,8 +28,15 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.navigationController?.navigationBar.isTranslucent = false
         self.tabBarController?.tabBar.isTranslucent = false
         
+        self.navigationController?.navigationBar.tintColor = ColorManager.themeBright
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.barStyle = .black;
+        self.tabBarController?.tabBar.tintColor = ColorManager.themeBright
+        self.tabBarController?.tabBar.barTintColor = UIColor.black
         
+        self.title = "Menu"
 
+        self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName : UIFont(name: "Mohave", size: 20)!,NSForegroundColorAttributeName : ColorManager.themeBright]
     }
 
     override func viewDidAppear(_ animated: Bool) {

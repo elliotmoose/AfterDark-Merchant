@@ -56,7 +56,7 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         
         //focusLocationButton
         let targetWidth : CGFloat = 45
-        focusLocationButton = UIButton(frame: CGRect(x: Sizing.ScreenWidth() - 20 - targetWidth, y: 20, width: targetWidth, height: targetWidth))
+        focusLocationButton = UIButton(frame: CGRect(x: Sizing.ScreenWidth() - 20 - targetWidth, y: Sizing.ScreenHeight() - Sizing.navBarHeight - Sizing.statusBarHeight - Sizing.tabBarHeight - targetWidth - 20, width: targetWidth, height: targetWidth))
         
         //set up button image
         focusLocationButton?.imageView?.contentMode = .scaleAspectFit
@@ -240,9 +240,11 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
             cell = UITableViewCell()
         }
         
-        let result = searchResults[indexPath.row].attributedFullText
-        print(result)
-        cell?.textLabel?.text = "\(result)"
+        let result = searchResults[indexPath.row]
+        
+        let resultString = result.attributedFullText.string
+        
+        cell?.textLabel?.text = "\(resultString)"
         
         return cell!
     }

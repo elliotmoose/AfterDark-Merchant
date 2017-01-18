@@ -187,36 +187,35 @@ class Account {
         
         Merchant_username = ""
         Merchant_ID = ""
+        Merchant_Bar_ID = ""
         Merchant_Email = ""
         
-        UD.setValue("",forKey: "user_name")
-        UD.setValue("",forKey: "User_ID")
-        UD.setValue("",forKey: "User_Email")
-        UD.setValue("", forKey: "Bar_ID")
+        UD.setValue("",forKey: "Merchant_username")
+        UD.setValue("",forKey: "Merchant_ID")
+        UD.setValue("",forKey: "Merchant_Email")
+        UD.setValue("", forKey: "Merchant_Bar_ID")
 
     }
     
 	func Save()
 	{
 	    let UD = UserDefaults.standard
-	    UD.setValue(Merchant_username,forKey: "user_name")
-	    UD.setValue(Merchant_ID,forKey: "User_ID")
-	    UD.setValue(Merchant_Email,forKey: "User_Email")
-        UD.setValue(Merchant_Bar_ID, forKey: "Bar_ID")
+	    UD.setValue(Merchant_username,forKey: "Merchant_username")
+	    UD.setValue(Merchant_ID,forKey: "Merchant_ID")
+	    UD.setValue(Merchant_Email,forKey: "Merchant_Email")
+        UD.setValue(Merchant_Bar_ID, forKey: "Merchant_Bar_ID")
 	}
 
 	func Load()
 	{
         if Settings.ignoreUserDefaults == false
-        {
-            
+        { 
             let UD = UserDefaults.standard
             
-            self.Merchant_username = UD.value(forKey: "user_name") as? String
-            
-            self.Merchant_ID = UD.value(forKey: "User_ID") as? String
-            self.Merchant_Email = UD.value(forKey: "User_Email") as? String
-            self.Merchant_Bar_ID = UD.value(forKey: "Bar_ID") as? String
+            self.Merchant_username = UD.value(forKey: "Merchant_username") as? String
+            self.Merchant_ID = UD.value(forKey: "Merchant_ID") as? String
+            self.Merchant_Email = UD.value(forKey: "Merchant_Email") as? String
+            self.Merchant_Bar_ID = UD.value(forKey: "Merchant_Bar_ID") as? String
         }
 	}
 }

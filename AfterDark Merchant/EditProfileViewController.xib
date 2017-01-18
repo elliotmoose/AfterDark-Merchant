@@ -37,6 +37,7 @@
                 <outlet property="thursdayTextField" destination="twQ-ir-qui" id="cFk-Ob-tpS"/>
                 <outlet property="tuesdayTextField" destination="2TO-3Z-O30" id="HPF-Jv-XB0"/>
                 <outlet property="updateButton" destination="eMB-gx-HEW" id="vJw-0v-zes"/>
+                <outlet property="updateButtonBottomConstraint" destination="aKl-Yd-nwC" id="Bdl-IZ-fhs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="websiteIcon" destination="njO-XU-rXc" id="AuA-NL-Mbp"/>
                 <outlet property="websiteTextField" destination="ODX-dq-NfY" id="dJM-fH-KAN"/>
@@ -346,7 +347,7 @@
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eMB-gx-HEW">
                     <rect key="frame" x="0.0" y="984" width="768" height="40"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.9373854949" green="0.9373854949" blue="0.9373854949" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="zWq-EL-UcU"/>
                     </constraints>

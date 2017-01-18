@@ -184,6 +184,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate,LoginDelegate {
                         CacheManager.singleton.SaveUsername(username: username!)
                     }
                     
+                    Account.singleton.Merchant_ID = "0"
+                    Account.singleton.Merchant_Bar_ID = "0"
+                    Account.singleton.Merchant_username = "Admin"
+                    
+                    Account.singleton.Save()
+                    
                     Dismiss()
                     self.ResetTextFields()
                 }

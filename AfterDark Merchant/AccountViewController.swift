@@ -21,6 +21,9 @@ class AccountViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.view.addSubview(tableView!)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.black
+        self.navigationController?.navigationBar.tintColor = ColorManager.themeBright
     }
     
     
