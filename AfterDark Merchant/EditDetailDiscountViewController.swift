@@ -12,6 +12,8 @@ class EditDetailDiscountViewController: UIViewController,UITextFieldDelegate,UIT
 
     static let singleton = EditDetailDiscountViewController(nibName: "EditDetailDiscountViewController", bundle: Bundle.main)
 
+    var onlyPercentageDeals = false
+    
     var activeField : AnyObject?
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -241,33 +243,42 @@ class EditDetailDiscountViewController: UIViewController,UITextFieldDelegate,UIT
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if textField == amountTextField
+        if onlyPercentageDeals
         {
-            let oldText = textField.text?.replacingOccurrences(of: "%", with: "")
-            let _ = oldText?.replacingOccurrences(of: ".", with: "")
-            let newString = "\(oldText!)%" as NSString
-            
-            var newRange = NSRange()
-            
-            if range.location != 0
+            if textField == amountTextField
             {
-                newRange.location = range.location - 1
-                newRange.length = range.length
-            }
-            else
-            {
+                let oldText = textField.text?.replacingOccurrences(of: "%", with: "")
+                let _ = oldText?.replacingOccurrences(of: ".", with: "")
+                let newString = "\(oldText!)%" as NSString
+                
+                var newRange = NSRange()
+                
+                if range.location != 0
+                {
+                    newRange.location = range.location - 1
+                    newRange.length = range.length
+                }
+                else
+                {
+                    return false
+                }
+                
+                
+                
+                textField.text = newString.replacingCharacters(in: newRange, with: string)
+                
+                textDidChange()
                 return false
             }
             
-
-            
-            textField.text = newString.replacingCharacters(in: newRange, with: string)
-
-            textDidChange()
             return false
         }
+        else
+        {
+            return true
+        }
         
-        return false
+
     }
     //==============================================================================================================
     //                                     PUSH UP SCROLL VIEW WHEN EDITING TEXT

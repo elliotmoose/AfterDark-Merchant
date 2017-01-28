@@ -90,7 +90,30 @@ class BarManager
             
         })
         
+     
+        //load max image count 
+        let maxImageCountUrl = Network.domain + "GetNumberOfImages.php"
         
+        //load max count
+        Network.singleton.DataFromUrl(maxImageCountUrl) { (success, output) in
+            if success
+            {
+                if let output = output
+                {
+                    //incomplete
+                }
+                else
+                {
+                    
+                }
+            }
+            else
+            {
+                
+            }
+        }
+        
+        let loadImageUrl = Network.domain + "AfterDarkServer/GetBarGalleryImage.php?Bar_ID=0&Image_Index="
     }
 
     

@@ -2,4 +2,70 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AfterDark Merchant/BarManager.swift"
+            timestampString = "506881068.355254"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "LoadMerchantBar(ID:handler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AfterDark Merchant/QRCodeScannerViewController.swift"
+            timestampString = "506967945.732751"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "QrCodeCaptured(output:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AfterDark_Merchant.QRCodeScannerViewController.QrCodeCaptured (output : Swift.String) -&gt; ()"
+                  moduleName = "AfterDark Merchant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/elliotmoose/Desktop/Programming/AfterDark%20Merchant/AfterDark%20Merchant/QRCodeScannerViewController.swift"
+                  timestampString = "506964875.830684"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "122"
+                  endingLineNumber = "122"
+                  offsetFromSymbolStart = "6340">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AfterDark_Merchant.QRCodeScannerViewController.(QrCodeCaptured (output : Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "AfterDark Merchant"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/elliotmoose/Desktop/Programming/AfterDark%20Merchant/AfterDark%20Merchant/QRCodeScannerViewController.swift"
+                  timestampString = "506964875.833749"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

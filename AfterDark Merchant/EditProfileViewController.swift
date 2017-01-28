@@ -31,7 +31,7 @@
 
 import UIKit
 
-class EditProfileViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate,OpeningHoursPickerDelegate {
+class EditProfileViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate,OpeningHoursPickerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
     static let singleton = EditProfileViewController(nibName: "EditProfileViewController", bundle: Bundle.main)
     
@@ -45,6 +45,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     var refreshButton : UIBarButtonItem?
     var activityIndicator : UIActivityIndicatorView?
     
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var contactIcon: UIImageView!
     
     @IBOutlet weak var websiteIcon: UIImageView!
@@ -84,9 +85,11 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     
     @IBOutlet weak var updateButtonBottomConstraint: NSLayoutConstraint!
     
-    
+    var selectedImages = [UIImage]()
     let timePicker = OpeningHoursPickerView()
 
+    let imagePicker = UIImagePickerController()
+    var currentImageIndex : Int?
     
     @IBAction func UpdateProfile(_ sender: Any) {
 
@@ -233,12 +236,21 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
             field.delegate = self
         }
         
-
+        //colletion view
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
+        collectionView.register(UINib(nibName: "SelectImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "SelectImageCollectionViewCell")
+        
+        collectionView.contentInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+        
+        //image picker
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
         
 
-        
-
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesutre(gesture:)))
+        collectionView.addGestureRecognizer(longPressGesture)
     
     }
     required init?(coder aDecoder: NSCoder) {
@@ -283,6 +295,8 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         {
             self.navigationItem.rightBarButtonItem = self.refreshButton
         }
+        
+        collectionView.reloadData()
         
     }
     
@@ -595,6 +609,16 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
                 self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
             }
         }
+        
+        
+        let keyboardHeight = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size.height
+        let toolBarHeight : CGFloat = 30
+        updateButtonBottomConstraint.constant = keyboardHeight! - Sizing.tabBarHeight
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
     }
     
     func keyboardWillBeHidden(notification: NSNotification){
@@ -605,6 +629,14 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         self.scrollView.contentOffset = CGPoint(x: 0, y: 0)
         
         self.scrollView.scrollIndicatorInsets = contentInsets
+
+        updateButtonBottomConstraint.constant = 0
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.view.layoutIfNeeded()
+        })
+        
+
     }
 
     //==============================================================================================================
@@ -775,7 +807,223 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         return barNameTextView
     }
 
+    //==============================================================================================================
+    //                                          COLLECTION VIEW DELEGATE METHODS
+    //==============================================================================================================
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? SelectImageCollectionViewCell else {return}
+        
+        if let _ = cell.imageView.image //if has image already
+        {
+            //delete or choose new image
+            currentImageIndex = indexPath.row
+            PresentEditImageActionSheet(indexPath: indexPath)
+        }
+        else // else choose image
+        {
+            currentImageIndex = indexPath.row
+            PresentChooseImageActionSheet(indexPath: indexPath)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize
+    {
+        
+        return CGSize(width: 70, height: 150)
+    }
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectImageCollectionViewCell",for: indexPath) as? SelectImageCollectionViewCell
 
+        guard indexPath.row < selectedImages.count else {
+            
+            cell?.imageView.image = nil
+            return cell!
+        }
+        
+        let image = selectedImages[indexPath.row]
+        
+        cell?.imageView.image = image
+        
+        return cell!
+    }
+ 
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+        if indexPath.row < selectedImages.count
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let originIndex = sourceIndexPath.row
+        let destinationIndex = destinationIndexPath.row
+        
+        guard originIndex < selectedImages.count else {return}
+        if destinationIndex < selectedImages.count
+        {
+            let image = selectedImages[originIndex]
+            selectedImages.remove(at: originIndex)
+            selectedImages.insert(image, at: destinationIndex)
+            
+            UpdateCollectionViewUI()
+        }
+        else
+        {
+            let image = selectedImages[originIndex]
+            selectedImages.remove(at: originIndex)
+            selectedImages.append(image)
+            
+            UpdateCollectionViewUI()
+
+        }
+
+
+    }
+    
+    func handleLongGesutre(gesture : UILongPressGestureRecognizer)
+    {
+        switch gesture.state {
+        case .began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {break}
+            if #available(iOS 9.0, *) {
+                collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            } else {
+                // Fallback on earlier versions
+            }
+        case .changed:
+            if #available(iOS 9.0, *) {
+                self.collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+            } else {
+                // Fallback on earlier versions
+            }
+        case .ended:
+            if #available(iOS 9.0, *) {
+                self.collectionView.endInteractiveMovement()
+                
+                self.UpdateCollectionViewUI()
+            } else {
+                // Fallback on earlier versions
+            }
+        default:
+            if #available(iOS 9.0, *) {
+                self.collectionView.cancelInteractiveMovement()
+                
+                self.UpdateCollectionViewUI()
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+    //==============================================================================================================
+    //                                          IMAGE PICKER DELEGATE METHODS
+    //==============================================================================================================
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let index = currentImageIndex
+        {
+            if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            {
+                if index < selectedImages.count
+                {
+                    selectedImages[index] = image   
+                }
+                else
+                {
+                    selectedImages.append(image)
+                }
+
+                self.UpdateCollectionViewUI()
+            }
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //==============================================================================================================
+    //                                          ACTION SHEET METHODS
+    //==============================================================================================================
+    func PresentChooseImageActionSheet(indexPath : IndexPath)
+    {
+        let actionCont = UIAlertController(title: nil, message: "New Image", preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            self.currentImageIndex = nil
+        }
+        
+        let chooseImageAction = UIAlertAction(title: "Choose Image From Library", style: .default) { (action) in
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        
+        actionCont.addAction(cancelAction)
+        actionCont.addAction(chooseImageAction)
+
+        DispatchQueue.main.async {
+            self.present(actionCont, animated: true, completion: nil)
+        }
+    }
+    
+    func PresentEditImageActionSheet(indexPath : IndexPath)
+    {
+        let actionCont = UIAlertController(title: nil, message: "Edit image", preferredStyle: .actionSheet)
+    
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            self.currentImageIndex = nil
+        }
+        
+        let chooseImageAction = UIAlertAction(title: "Choose Image From Library", style: .default) { (action) in
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }
+        
+        let deleteImageAction = UIAlertAction(title: "Remove Image", style: .destructive) { (action) in
+            
+            
+            if let index = self.currentImageIndex
+            {
+                if index < self.selectedImages.count
+                {
+                    self.selectedImages.remove(at: index)
+                    
+                    self.UpdateCollectionViewUI()
+                }
+            }
+
+        }
+        
+        actionCont.addAction(cancelAction)
+        actionCont.addAction(chooseImageAction)
+        actionCont.addAction(deleteImageAction)
+        
+        DispatchQueue.main.async {
+            self.present(actionCont, animated: true, completion: nil)
+        }
+    }
+    
+    func UpdateCollectionViewUI()
+    {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
 }
 
 

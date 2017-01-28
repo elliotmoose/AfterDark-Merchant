@@ -30,8 +30,12 @@
 			<string></string>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>QR Code Scanner</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) location use for maps</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Choose photos to upload as bar description images</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Mohave-Bold.otf</string>
@@ -58,8 +62,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

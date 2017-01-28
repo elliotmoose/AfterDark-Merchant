@@ -28,6 +28,10 @@ class EditDiscountsViewController: UIViewController,UITableViewDataSource,UITabl
         tableView!.dataSource = self
         self.view.addSubview(tableView!)
         
+        
+        //add new discount button
+        let addDiscountButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(AddDiscount))
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -77,5 +81,11 @@ class EditDiscountsViewController: UIViewController,UITableViewDataSource,UITabl
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func AddDiscount()
+    {
+        //present add discount view
+    }
+    
 
 }

@@ -57,6 +57,9 @@
 		A47CF8281E00F86900C33FE4 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF8271E00F86900C33FE4 /* Review.swift */; };
 		A4AEB34A1E2F48C500A1BED9 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AEB3481E2F48C500A1BED9 /* InitialViewController.swift */; };
 		A4AEB34B1E2F48C500A1BED9 /* InitialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AEB3491E2F48C500A1BED9 /* InitialViewController.xib */; };
+		A4AEB34E1E3073BA00A1BED9 /* SelectImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AEB34C1E3073BA00A1BED9 /* SelectImageCollectionViewCell.swift */; };
+		A4AEB34F1E3073BA00A1BED9 /* SelectImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4AEB34D1E3073BA00A1BED9 /* SelectImageCollectionViewCell.xib */; };
+		A4AEB3511E30778400A1BED9 /* customCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4AEB3501E30778400A1BED9 /* customCollectionViewLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +136,9 @@
 		A47CF8271E00F86900C33FE4 /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		A4AEB3481E2F48C500A1BED9 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		A4AEB3491E2F48C500A1BED9 /* InitialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InitialViewController.xib; sourceTree = "<group>"; };
+		A4AEB34C1E3073BA00A1BED9 /* SelectImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		A4AEB34D1E3073BA00A1BED9 /* SelectImageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		A4AEB3501E30778400A1BED9 /* customCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = customCollectionViewLayout.swift; sourceTree = "<group>"; };
 		BB36ABCE28C7F7E18E529A68 /* libPods-AfterDark Merchant.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AfterDark Merchant.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E526F0E10BB90877FC72D83D /* Pods-AfterDark Merchant.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AfterDark Merchant.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AfterDark Merchant/Pods-AfterDark Merchant.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,6 +193,8 @@
 				A4381B3C1E0B781C0086B41F /* ChooseLocationViewController.xib */,
 				A47CF81E1E0029AA00C33FE4 /* EditProfileViewController.swift */,
 				A47CF81F1E0029AA00C33FE4 /* EditProfileViewController.xib */,
+				A4AEB34C1E3073BA00A1BED9 /* SelectImageCollectionViewCell.swift */,
+				A4AEB34D1E3073BA00A1BED9 /* SelectImageCollectionViewCell.xib */,
 			);
 			name = "Edit Description";
 			sourceTree = "<group>";
@@ -214,6 +222,7 @@
 		A439FFA11DF6742A005BFAC4 = {
 			isa = PBXGroup;
 			children = (
+				A4AEB3501E30778400A1BED9 /* customCollectionViewLayout.swift */,
 				A473F97F1E19554C00F640F9 /* Champagne & Limousines.ttf */,
 				A473F9801E19554C00F640F9 /* Mohave-Bold.otf */,
 				A473F9811E19554C00F640F9 /* Mohave Italics.otf */,
@@ -252,7 +261,6 @@
 				A401DB991E054A0A003C5F95 /* OpeningHoursPickerView.swift */,
 				A473F9991E19FF8600F640F9 /* ColorManager.swift */,
 				A439FFB31DF6742B005BFAC4 /* Main.storyboard */,
-				A439FFDD1DF674C3005BFAC4 /* QrCodeCaptureView.swift */,
 				A439FFB61DF6742B005BFAC4 /* Assets.xcassets */,
 				A439FFB81DF6742B005BFAC4 /* LaunchScreen.storyboard */,
 				A439FFBB1DF6742B005BFAC4 /* Info.plist */,
@@ -316,6 +324,7 @@
 				A439FFF31DF6C4BE005BFAC4 /* SettingsTableViewController.swift */,
 				A439FFF51DF6C611005BFAC4 /* AccountViewController.swift */,
 				A439FFF11DF6C18F005BFAC4 /* QRCodeScannerViewController.swift */,
+				A439FFDD1DF674C3005BFAC4 /* QrCodeCaptureView.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -453,6 +462,7 @@
 				A473F9961E195FCC00F640F9 /* BEBAS___.TTF in Resources */,
 				A4AEB34B1E2F48C500A1BED9 /* InitialViewController.xib in Resources */,
 				A473F9981E195FCC00F640F9 /* Montserrat-Regular.ttf in Resources */,
+				A4AEB34F1E3073BA00A1BED9 /* SelectImageCollectionViewCell.xib in Resources */,
 				A439FFBA1DF6742B005BFAC4 /* LaunchScreen.storyboard in Resources */,
 				A473F9901E195FC900F640F9 /* Mohave-Bold.otf in Resources */,
 				A473F9941E195FCC00F640F9 /* Mohave-SemiBold.otf in Resources */,
@@ -540,6 +550,8 @@
 				A47CF8241E00F43500C33FE4 /* Bar.swift in Sources */,
 				A401DB961E039597003C5F95 /* ExtensionsAndStructs.swift in Sources */,
 				A4AEB34A1E2F48C500A1BED9 /* InitialViewController.swift in Sources */,
+				A4AEB3511E30778400A1BED9 /* customCollectionViewLayout.swift in Sources */,
+				A4AEB34E1E3073BA00A1BED9 /* SelectImageCollectionViewCell.swift in Sources */,
 				A4381B471E0B793F0086B41F /* EditDiscountsViewController.swift in Sources */,
 				A439FFEE1DF6901B005BFAC4 /* Sizing.swift in Sources */,
 				A439FFE01DF68845005BFAC4 /* PopupManager.swift in Sources */,
