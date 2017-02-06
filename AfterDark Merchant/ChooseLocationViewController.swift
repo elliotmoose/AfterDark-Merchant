@@ -11,6 +11,15 @@ import GoogleMaps
 import GooglePlaces
 import MapKit
 
+//things to do:
+//view appear -> select current
+//choose location -> set currently selected
+//done button -> set updating bar and call "text changed"
+
+protocol LocationToProfileDelegate : class {
+    func SetUpdatingBarLocation()
+}
+
 class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
 
     static let singleton = ChooseLocationViewController(nibName: "ChooseLocationViewController", bundle: Bundle.main)
@@ -21,13 +30,19 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
     var mapBehaviorMode = 0
     var locationManager : CLLocationManager?
     var searchResultsTableView = UITableView()
-    
-    
+    let marker = GMSMarker()
+    weak var delegate : LocationToProfileDelegate?
     //search bar
     @IBOutlet weak var searchField: UITextField!
     var searchResults = [GMSAutocompletePrediction]()
     
     let dropPin = MKPinAnnotationView()
+    
+    //currently selected location
+    var currentLat : Double = 0
+    var currentLong : Double = 0
+    var currentAddress = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +58,16 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         GMSServices.provideAPIKey(Settings.googleMapsKey)
         GMSPlacesClient.provideAPIKey(Settings.googleMapsKey)
         
-        let loc_lat : Double = 0
-        let loc_long : Double = 0
-        let camera = GMSCameraPosition.camera(withLatitude: loc_lat, longitude: loc_long, zoom: 17)
+
+        
+        
+        let camera = GMSCameraPosition.camera(withLatitude: currentLat, longitude: currentLong, zoom: 17)
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView?.isMyLocationEnabled = true
         mapView?.delegate = self
         mapView?.frame = view.frame
+        
+        marker.map = mapView
         
         self.view.addSubview(mapView!)
         self.view.sendSubview(toBack: mapView!)
@@ -92,7 +110,8 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         self.view.addSubview(searchResultsTableView)
         self.view.bringSubview(toFront: searchField)
 
-        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(DoneButtonPressed))
+        self.navigationItem.rightBarButtonItem = doneButton
     }
 
     
@@ -100,6 +119,9 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         //present(autoCompleteViewCont, animated: true, completion: nil)
         view.layoutSubviews()
         view.layoutIfNeeded()
+        
+        self.focusLocation(self.currentLat, self.currentLong)
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -197,6 +219,41 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         focusLocationButton?.setImage(targetImage.withRenderingMode(.alwaysTemplate), for: .normal)
     }
     
+    
+    func DoneButtonPressed()
+    {
+        //call delegate function to set updating bar
+        self.delegate?.SetUpdatingBarLocation()
+        
+        //dismiss
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    //================================================================================================
+    //                                          MAP RELATED FUNCTIONS
+    //================================================================================================
+    
+    func SetMarker(_ lat : CLLocationDegrees, _ long : CLLocationDegrees)
+    {
+   
+        // Creates a marker in the center of the map.
+        
+        marker.position = CLLocationCoordinate2D(latitude: lat,longitude: long)
+    }
+    
+    func focusLocation(_ lat : CLLocationDegrees, _ long : CLLocationDegrees)
+    {
+        DispatchQueue.main.async {
+            
+            //add marker
+            self.SetMarker(lat,long)
+            
+            //move to location
+            let location = CLLocationCoordinate2D(latitude: self.currentLat, longitude: self.currentLong)
+            self.mapView?.animate(toLocation: location)
+        }
+    }
+    
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         
         if gesture
@@ -205,7 +262,6 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         }
         
     }
-    
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -224,6 +280,9 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
     }
     
     
+    //================================================================================================
+    //                                          RESULTS TABLEVIEW FUNCTIONS
+    //================================================================================================
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -259,19 +318,20 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         placeClient.lookUpPlaceID(placeID, callback: {
             (result,error) -> Void in
             
-            
             guard let result = result else {return}
-            Account.singleton.Merchant_Bar?.loc_lat = Float(result.coordinate.latitude)
-            Account.singleton.Merchant_Bar?.loc_long = Float(result.coordinate.longitude)
-            Account.singleton.Merchant_Bar?.address = result.formattedAddress!
+            self.currentLat = Double(result.coordinate.latitude)
+            self.currentLong = Double(result.coordinate.longitude)
+            self.currentAddress = result.formattedAddress!
+            
+            self.focusLocation(self.currentLat, self.currentLong)
+
             
         })
         
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.alpha = 0
     }
-    
-    
-    
+
+
 
 }

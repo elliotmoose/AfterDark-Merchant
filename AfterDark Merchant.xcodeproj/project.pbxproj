@@ -35,6 +35,10 @@
 		A439FFF21DF6C18F005BFAC4 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFF11DF6C18F005BFAC4 /* QRCodeScannerViewController.swift */; };
 		A439FFF41DF6C4BE005BFAC4 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFF31DF6C4BE005BFAC4 /* SettingsTableViewController.swift */; };
 		A439FFF71DF6C611005BFAC4 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A439FFF51DF6C611005BFAC4 /* AccountViewController.swift */; };
+		A4415B651E43204B00B2678F /* EditDraftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4415B631E43204B00B2678F /* EditDraftViewController.swift */; };
+		A4415B681E43204B00B2678F /* EditDraftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4415B641E43204B00B2678F /* EditDraftViewController.xib */; };
+		A4415B691E43204B00B2678F /* EditDraftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4415B641E43204B00B2678F /* EditDraftViewController.xib */; };
+		A4415B6A1E43204B00B2678F /* EditDraftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4415B641E43204B00B2678F /* EditDraftViewController.xib */; };
 		A473F98A1E1956D400F640F9 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473F9891E1956D400F640F9 /* CacheManager.swift */; };
 		A473F98D1E195E7F00F640F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A473F98B1E195E7F00F640F9 /* LoginViewController.swift */; };
 		A473F98E1E195E7F00F640F9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A473F98C1E195E7F00F640F9 /* LoginViewController.xib */; };
@@ -114,6 +118,8 @@
 		A439FFF11DF6C18F005BFAC4 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		A439FFF31DF6C4BE005BFAC4 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		A439FFF51DF6C611005BFAC4 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		A4415B631E43204B00B2678F /* EditDraftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDraftViewController.swift; sourceTree = "<group>"; };
+		A4415B641E43204B00B2678F /* EditDraftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditDraftViewController.xib; sourceTree = "<group>"; };
 		A473F97F1E19554C00F640F9 /* Champagne & Limousines.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Champagne & Limousines.ttf"; sourceTree = "<group>"; };
 		A473F9801E19554C00F640F9 /* Mohave-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mohave-Bold.otf"; sourceTree = "<group>"; };
 		A473F9811E19554C00F640F9 /* Mohave Italics.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mohave Italics.otf"; sourceTree = "<group>"; };
@@ -213,6 +219,8 @@
 			children = (
 				A4381B451E0B793F0086B41F /* EditDiscountsViewController.swift */,
 				A4381B461E0B793F0086B41F /* EditDiscountsViewController.xib */,
+				A4415B631E43204B00B2678F /* EditDraftViewController.swift */,
+				A4415B641E43204B00B2678F /* EditDraftViewController.xib */,
 				A4381B501E0CE2550086B41F /* EditDetailDiscountViewController.swift */,
 				A4381B511E0CE2550086B41F /* EditDetailDiscountViewController.xib */,
 			);
@@ -465,6 +473,7 @@
 				A4AEB34F1E3073BA00A1BED9 /* SelectImageCollectionViewCell.xib in Resources */,
 				A439FFBA1DF6742B005BFAC4 /* LaunchScreen.storyboard in Resources */,
 				A473F9901E195FC900F640F9 /* Mohave-Bold.otf in Resources */,
+				A4415B681E43204B00B2678F /* EditDraftViewController.xib in Resources */,
 				A473F9941E195FCC00F640F9 /* Mohave-SemiBold.otf in Resources */,
 				A47CF8211E0029AA00C33FE4 /* EditProfileViewController.xib in Resources */,
 				A473F98F1E195FC700F640F9 /* Champagne & Limousines.ttf in Resources */,
@@ -481,6 +490,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4415B691E43204B00B2678F /* EditDraftViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +498,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4415B6A1E43204B00B2678F /* EditDraftViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +561,7 @@
 				A47CF8241E00F43500C33FE4 /* Bar.swift in Sources */,
 				A401DB961E039597003C5F95 /* ExtensionsAndStructs.swift in Sources */,
 				A4AEB34A1E2F48C500A1BED9 /* InitialViewController.swift in Sources */,
+				A4415B651E43204B00B2678F /* EditDraftViewController.swift in Sources */,
 				A4AEB3511E30778400A1BED9 /* customCollectionViewLayout.swift in Sources */,
 				A4AEB34E1E3073BA00A1BED9 /* SelectImageCollectionViewCell.swift in Sources */,
 				A4381B471E0B793F0086B41F /* EditDiscountsViewController.swift in Sources */,

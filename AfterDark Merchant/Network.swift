@@ -1,5 +1,5 @@
 import Foundation
-
+import UIKit
 
 class Network {
     
@@ -210,6 +210,11 @@ class Network {
         
         task.resume()
         
+    }
+    
+    func UploadImages(_ url : String, _ images : [UIImage])
+    {
+        session.
     }
     
     //json data management

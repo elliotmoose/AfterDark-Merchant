@@ -9,9 +9,9 @@ class Account {
     var Merchant_Email : String?
     var Merchant_Bar : Bar?
     
+    
     init() {
         Merchant_username = ""
-        
     }
     
 

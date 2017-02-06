@@ -94,7 +94,7 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
 
     
@@ -114,9 +114,9 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         {
         case IndexPath(row: 0, section: 0):
             cell?.textLabel?.text = "Manage Bar Profile"
-        case IndexPath(row: 1, section: 0):
-            cell?.textLabel?.text = "Manage Bar Reservations"
         case IndexPath(row: 2, section: 0):
+            cell?.textLabel?.text = "Manage Bar Reservations"
+        case IndexPath(row: 1, section: 0):
             cell?.textLabel?.text = "Manage Bar Discounts"
         default:
             break
@@ -131,11 +131,12 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
         switch indexPath
         {
-        case IndexPath(row: 0, section: 0):
+        case IndexPath(row: 0, section: 0):            
             self.navigationController?.pushViewController(EditProfileViewController.singleton, animated: true)
-        case IndexPath(row: 1, section: 0):
-            self.navigationController?.pushViewController(EditReservationsViewController.singleton, animated: true)
+            EditProfileViewController.singleton.ViewWillAppearFromMenu()
         case IndexPath(row: 2, section: 0):
+            self.navigationController?.pushViewController(EditReservationsViewController.singleton, animated: true)
+        case IndexPath(row: 1, section: 0):
             self.navigationController?.pushViewController(EditDiscountsViewController.singleton, animated: true)
         default:
             break

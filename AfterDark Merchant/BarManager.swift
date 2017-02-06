@@ -211,12 +211,22 @@ class BarManager
         
         if let loc_lat = dict["Bar_Location_Latitude"] as? String
         {
-            newBar.loc_lat = Float(loc_lat)!
+            newBar.loc_lat = Double(loc_lat)!
+        }
+        else if let loc_lat = dict["Bar_Location_Latitude"] as? Double
+        {
+            newBar.loc_lat = loc_lat
+
         }
         
         if let loc_long = dict["Bar_Location_Longitude"] as? String
         {
-            newBar.loc_long = Float(loc_long)!
+            newBar.loc_long = Double(loc_long)!
+        }
+        else if let loc_long = dict["Bar_Location_Longitude"] as? Double
+        {
+            newBar.loc_long = loc_long
+            
         }
         
         if let address = dict["Bar_Address"] as? String

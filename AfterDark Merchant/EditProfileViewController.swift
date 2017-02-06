@@ -31,7 +31,7 @@
 
 import UIKit
 
-class EditProfileViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate,OpeningHoursPickerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class EditProfileViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate,OpeningHoursPickerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,LocationToProfileDelegate {
 
     static let singleton = EditProfileViewController(nibName: "EditProfileViewController", bundle: Bundle.main)
     
@@ -168,6 +168,11 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     @IBOutlet weak var chooseLocationButton: UIButton!
     
     @IBAction func ChooseLocationButtonPressed(_ sender: Any) {
+        
+        ChooseLocationViewController.singleton.currentLat = UpdatingBar.loc_lat
+        ChooseLocationViewController.singleton.currentLong = UpdatingBar.loc_long
+        ChooseLocationViewController.singleton.currentAddress = UpdatingBar.address
+        
         self.navigationController?.pushViewController(ChooseLocationViewController.singleton, animated: true)
     }
     
@@ -188,6 +193,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         websiteTextField.addTarget(self, action: #selector(textDidChange), for: UIControlEvents.editingChanged)
         contactTextField.addTarget(self, action: #selector(textDidChange), for: UIControlEvents.editingChanged)
         
+        ChooseLocationViewController.singleton.delegate = self
         //refresh button
         //init refresh button
         self.activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0,y: 0,width: 20,height: 20))
@@ -278,14 +284,6 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     override func viewWillAppear(_ animated: Bool) {
         registerForKeyboardNotifications()
         
-        
-        //load and display information
-        if Account.singleton.Merchant_Bar != nil
-        {
-            LoadUpdatingBarFromAccounts()
-            DisplayUpdatingBar()
-        }
-        
         //set refresh button
         if isReloadingBar
         {
@@ -298,6 +296,17 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         
         collectionView.reloadData()
         
+    }
+    
+    func ViewWillAppearFromMenu()
+    {
+        //load and display information
+        if Account.singleton.Merchant_Bar != nil
+        {
+            LoadUpdatingBarFromAccounts()
+            DisplayUpdatingBar()
+        }
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -331,7 +340,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     }
     
     //==============================================================================================================
-    //                                     UPDATING BUTTON (TO ALLOW UPDATING OR NOT)
+    //                                     UPDATING (TO ALLOW UPDATING OR NOT)
     //==============================================================================================================
 
     func NeedsUpdating() -> Bool
@@ -380,7 +389,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
 
         if Account.singleton.Merchant_Bar?.address != UpdatingBar.address {
             toUpdate = true
-            let param = "Bar_Address=\(UpdatingBar.address)"
+            let param = "Bar_Address=\(UpdatingBar.address.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
         
@@ -483,6 +492,10 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         UpdatingBar.openClosingHours[4] = (fridayTextField.text?.components(separatedBy: ":")[1])!
         UpdatingBar.openClosingHours[5] = (saturdayTextField.text?.components(separatedBy: ":")[1])!
         UpdatingBar.openClosingHours[6] = (sundayTextField.text?.components(separatedBy: ":")[1])!
+        
+        UpdatingBar.loc_lat = ChooseLocationViewController.singleton.currentLat
+        UpdatingBar.loc_long = ChooseLocationViewController.singleton.currentLong
+        UpdatingBar.address = ChooseLocationViewController.singleton.currentAddress
     }
 
     func LoadUpdatingBarFromAccounts()
@@ -535,6 +548,19 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         }
     }
 
+    func SetUpdatingBarLocation()
+    {
+        UpdatingBar.loc_lat = ChooseLocationViewController.singleton.currentLat
+        UpdatingBar.loc_long = ChooseLocationViewController.singleton.currentLong
+        UpdatingBar.address = ChooseLocationViewController.singleton.currentAddress
+        
+        
+        //values did change (check if needs updating)
+        textDidChange()
+        
+        //update display
+        self.DisplayUpdatingBar()
+    }
     //==============================================================================================================
     //                                     PUSH UP SCROLL VIEW WHEN EDITING TEXT
     //==============================================================================================================

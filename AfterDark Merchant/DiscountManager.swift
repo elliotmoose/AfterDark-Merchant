@@ -12,6 +12,8 @@ class DiscountManager
 {
     static let singleton = DiscountManager()
     
+    var draftDiscounts = [Discount]()
+
     init() {
         
     }
@@ -84,5 +86,15 @@ class DiscountManager
             }
             
         })
+    }
+    
+    func SaveDrafts()
+    {
+        
+    }
+    
+    func LoadDrafts()
+    {
+        
     }
 }

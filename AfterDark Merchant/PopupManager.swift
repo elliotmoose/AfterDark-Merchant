@@ -13,51 +13,62 @@ class PopupManager{
     
     func Popup(title : String , body : String, presentationViewCont : UIViewController)
     {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-            switch action.style{
-            case .default:
-                print("default")
-                
-            case .cancel:
-                print("cancel")
-                
-            case .destructive:
-                print("destructive")
-            }
-        }))
         
-        presentationViewCont.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                switch action.style{
+                case .default:
+                    print("default")
+                    
+                case .cancel:
+                    print("cancel")
+                    
+                case .destructive:
+                    print("destructive")
+                }
+            }))
+            
+            presentationViewCont.present(alert, animated: true, completion: nil)
+        }
+        
     }
     
     func Popup(title : String , body : String, presentationViewCont : UIViewController, handler: @escaping ()->Void)
     {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                //call back when ok clicked
+                handler();
+                
+            }))
             
-            //call back when ok clicked
-            handler();
-            
-        }))
-        
-        presentationViewCont.present(alert, animated: true, completion: nil)
+            presentationViewCont.present(alert, animated: true, completion: nil)
+        }
     }
     
     func PopupWithCancel(title : String , body : String, presentationViewCont : UIViewController, handler: @escaping ()->Void)
     {
-        let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { action in
+        
+        DispatchQueue.main.async {
             
-            //call back when ok clicked
-            handler();
+            let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { action in
+                
+                //call back when ok clicked
+                handler();
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                
+                
+            }))
             
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            
+            presentationViewCont.present(alert, animated: true, completion: nil)
+        }
 
-            
-        }))
-        
-        
-        presentationViewCont.present(alert, animated: true, completion: nil)
     }
 }
