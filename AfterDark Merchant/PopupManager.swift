@@ -71,4 +71,17 @@ class PopupManager{
         }
 
     }
+    func GlobalPopup(title: String, body : String)
+    {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: body, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                
+            }))
+            
+            UIApplication.shared.delegate?.window!!.rootViewController?.present(alert, animated: true, completion: nil)
+            
+        }
+    }
 }

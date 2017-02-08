@@ -212,9 +212,195 @@ class Network {
         
     }
     
-    func UploadImages(_ url : String, _ images : [UIImage])
+    func UploadImages(_ url : String, _ images : [UIImage], _ handler : @escaping (Bool,Data?)->Void)
     {
-        session.
+        guard images.count != 0 else {return}
+        
+        //init request
+        guard let url = URL(string: url) else {return}
+        let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 20.0)
+        request.httpMethod = "POST"
+        
+        //boundary
+        let boundary = GenerateBoundaryString()
+        let boundaryImplementString = "--\(boundary)"
+        
+        //content type
+        let contentTypeValue = "multipart/form-data; boundary=\(boundary)"
+        request.setValue(contentTypeValue, forHTTPHeaderField: "Content-Type")
+        
+        //body
+        let body = NSMutableData()
+        
+        //authentication body
+        guard let Merch_ID = Account.singleton.Merchant_ID else {return}
+        guard let authenData = TextIntoFormFragmentData(textName: "Merchant_ID", textValue: Merch_ID, boundary: "--\(boundary)") else
+        {
+            NSLog("Unable to process internal authentication")
+            return
+        }
+        
+        body.append(authenData)
+        
+        //image body
+        for i in 0...images.count-1
+        {
+            let image = images[i]
+            if let imageFormData = ImageIntoFormFragmentData(image: image, imageName: "\(i)", boundary: "--\(boundary)")
+            {
+                body.append(imageFormData)
+            }
+            else
+            {
+                NSLog("Error creating formData from UIImage")
+            }
+        }
+        
+        guard let lineBreak = "\r\n".data(using: .utf8) else {return}
+        body.append(lineBreak)
+        guard let boundaryData = "--\(boundary)--".data(using: .utf8) else {return}
+        body.append(boundaryData)
+        
+        request.httpBody = body as Data
+
+        if let bodyString = String(data: body as Data, encoding: .utf8)
+        {
+            print(bodyString)
+        }
+        
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest)
+        { data, response, error in
+            
+            
+            if let error = error
+            {
+                print(error)
+                
+                DispatchQueue.main.async {
+                    handler(false,nil)
+                }
+                
+                
+            }
+            else if let data = data
+            {
+                DispatchQueue.main.async {
+                    handler(true,data)
+                }
+            }
+            else
+            {
+                DispatchQueue.main.async {
+                    handler(false,nil)
+                }
+            }
+            
+        }
+        
+        task.resume()
+        
+        
+        
+    }
+    
+    private func GenerateBoundaryString() -> String
+    {
+        return "Boundary-\(NSUUID().uuidString)"
+    }
+    
+    func ImageIntoFormFragmentData(image : UIImage,imageName : String, boundary : String)->Data?
+    {
+        let output = NSMutableData()
+        
+        guard let boundaryData = boundary.data(using: .utf8) else {return nil}
+        guard let lineBreak = "\r\n".data(using: .utf8) else {return nil}
+        
+        guard let jpgImage = UIImageJPEGRepresentation(image, 1) else {return nil}
+        
+        let fileName = "\(imageName).jpg"
+        
+        //line break
+        output.append(lineBreak)
+        
+        //boundary
+        output.append(boundaryData)
+        
+        //line break
+        output.append(lineBreak)
+        
+        //content disposition
+        guard let contentDisp = "Content-Disposition: form-data; name=\"\(imageName)\"; filename=\"\(fileName)\"".data(using: .utf8) else {return nil}
+        output.append(contentDisp)
+        
+        //line break
+        output.append(lineBreak)
+        
+        //content type
+        guard let contentType = "Content-Type: image/jpeg".data(using: .utf8) else {return nil}
+        output.append(contentType)
+        
+        //line break
+        output.append(lineBreak)
+        output.append(lineBreak)
+
+        if let outputString = String(data: output as Data, encoding: .utf8)
+        {
+            print(outputString)
+        }
+        
+        
+        //content data
+        output.append(jpgImage)
+        
+        //line break
+        output.append(lineBreak)
+        
+        return output as Data
+    }
+    
+    //MerchantID
+    func TextIntoFormFragmentData(textName : String, textValue : String,  boundary : String) -> Data?
+    {
+        let output = NSMutableData()
+        
+        guard let boundaryData = boundary.data(using: .utf8) else {return nil}
+        guard let lineBreak = "\r\n".data(using: .utf8) else {return nil}
+        
+        //boundary
+        output.append(boundaryData)
+        
+        //line break
+        output.append(lineBreak)
+        
+        //content disposition
+        guard let contentDisp = "Content-Disposition: form-data; name=\"\(textName)\"".data(using: .utf8) else {return nil}
+        output.append(contentDisp)
+        
+        //line break
+        output.append(lineBreak)
+        
+        //content type
+        guard let contentType = "Content-Type: text/plain".data(using: .utf8) else {return nil}
+        output.append(contentType)
+        
+        //line break
+        output.append(lineBreak)
+        
+        //content data
+        guard let paramData = textValue.data(using: .utf8) else {return nil}
+        
+        
+        //line break
+        output.append(lineBreak)
+        
+        output.append(paramData)
+        
+        
+        //line break
+        output.append(lineBreak)
+        
+        return output as Data
     }
     
     //json data management

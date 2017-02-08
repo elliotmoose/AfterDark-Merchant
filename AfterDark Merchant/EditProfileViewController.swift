@@ -31,7 +31,7 @@
 
 import UIKit
 
-class EditProfileViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate,OpeningHoursPickerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,LocationToProfileDelegate {
+class EditProfileViewController: UIViewController,UITextViewDelegate,UITextFieldDelegate,OpeningHoursPickerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,LocationToProfileDelegate,BarManagerToProfileViewDelegate {
 
     static let singleton = EditProfileViewController(nibName: "EditProfileViewController", bundle: Bundle.main)
     
@@ -44,6 +44,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
 
     var refreshButton : UIBarButtonItem?
     var activityIndicator : UIActivityIndicatorView?
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var contactIcon: UIImageView!
@@ -85,82 +86,22 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     
     @IBOutlet weak var updateButtonBottomConstraint: NSLayoutConstraint!
     
-    var selectedImages = [UIImage]()
     let timePicker = OpeningHoursPickerView()
 
     let imagePicker = UIImagePickerController()
     var currentImageIndex : Int?
     
     @IBAction func UpdateProfile(_ sender: Any) {
-
-        let paramString = urlParameters.joined(separator: "&")
-        let url = Network.domain + "UpdateBarDescription.php?" + paramString
         
-        guard let MerchID = Account.singleton.Merchant_ID else {return}
-        guard let MerchBarID = Account.singleton.Merchant_Bar_ID else {return}
-        guard let MerchUsername = Account.singleton.Merchant_username else {return}
-
-        guard MerchBarID == UpdatingBar.ID else {NSLog("Updating Bar Not Initialized!!!");return}
-
-        let postParamString = "Bar_Owner_ID=\(MerchID)&Bar_Owner_Name=\(MerchUsername)&Bar_ID=\(MerchBarID)" // not done
+        if urlParameters.count != 0
+        {
+            PushTextUpdate()
+        }
         
-        print(url)
-        Network.singleton.DataFromUrlWithPost(url, postParam: postParamString, handler: {
-            (success,output) -> Void in
-            
-            if success
-            {
-                
-                guard let _ = output else {return}
-                
-                do
-                {
-                    let dict = try JSONSerialization.jsonObject(with: output!, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
-                    
-                    let success = dict["success"] as? String
-                    
-                    guard success != nil else {return}
-                    
-                    if success == "true"
-                    {
-                        let detailString = dict["detail"] as? String
-                        
-                        guard detailString != nil else {return}
-                        PopupManager.singleton.Popup(title: "Update!", body: detailString!, presentationViewCont: self)
-
-                        
-                        //*********** change updated bar to new updated
-                        self.LoadUpdatingBarToAccounts()
-
-                        
-                        self.textDidChange()
-                    }
-                    else
-                    {
-                        let detailString = dict["detail"] as? String
-                        
-                        guard detailString != nil else {return}
-                        PopupManager.singleton.Popup(title: "Error", body: detailString!, presentationViewCont: self)
-                    }
-                    
-                    
-                }
-                catch let error as NSError
-                {
-                    print(error)
-                }
-
-            }
-            else
-            {
-                print("failed to update")
-            }
-            
-            
-            
-        })
-
-        
+        if NeedsImagesUpdating()
+        {
+            PushImageUpdate()
+        }
     }
     
     @IBOutlet weak var updateButton: UIButton!
@@ -257,6 +198,8 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
 
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesutre(gesture:)))
         collectionView.addGestureRecognizer(longPressGesture)
+        
+        BarManager.singleton.delegate = self
     
     }
     required init?(coder aDecoder: NSCoder) {
@@ -294,8 +237,6 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
             self.navigationItem.rightBarButtonItem = self.refreshButton
         }
         
-        collectionView.reloadData()
-        
     }
     
     func ViewWillAppearFromMenu()
@@ -305,6 +246,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         {
             LoadUpdatingBarFromAccounts()
             DisplayUpdatingBar()
+            UpdateBarGallery()
         }
 
     }
@@ -330,6 +272,9 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         BarManager.singleton.ReloadBar(handler: {
             (success) -> Void in
             
+            self.LoadUpdatingBarFromAccounts()
+            self.DisplayUpdatingBar()
+            
             DispatchQueue.main.async(execute: {
                 self.navigationItem.rightBarButtonItem = self.refreshButton
                 self.isReloadingBar = false
@@ -339,6 +284,145 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         
     }
     
+    //========================================================================================================
+    //                                          NETWORK UPDATE FUNCTIONS
+    //========================================================================================================
+    func PushTextUpdate()
+    {
+        let paramString = urlParameters.joined(separator: "&")
+        let url = Network.domain + "UpdateBarDescription.php?" + paramString
+        
+        guard let MerchID = Account.singleton.Merchant_ID else {return}
+        guard let MerchBarID = Account.singleton.Merchant_Bar_ID else {return}
+        guard let MerchUsername = Account.singleton.Merchant_username else {return}
+        
+        guard MerchBarID == UpdatingBar.ID else {NSLog("Updating Bar Not Initialized!!!");return}
+        
+        let postParamString = "Bar_Owner_ID=\(MerchID)&Bar_Owner_Name=\(MerchUsername)&Bar_ID=\(MerchBarID)" // not done
+        
+        Network.singleton.DataFromUrlWithPost(url, postParam: postParamString, handler: {
+            (success,output) -> Void in
+            
+            if success
+            {
+                
+                guard let _ = output else {return}
+                
+                do
+                {
+                    let dict = try JSONSerialization.jsonObject(with: output!, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
+                    
+                    let success = dict["success"] as? String
+                    
+                    guard success != nil else {return}
+                    
+                    if success == "true"
+                    {
+                        let detailString = dict["detail"] as? String
+                        
+                        guard detailString != nil else {return}
+                        PopupManager.singleton.Popup(title: "Update!", body: detailString!, presentationViewCont: self)
+                        
+                        
+                        //*********** change updated bar to new updated
+                        self.LoadUpdatingBarToAccounts()
+                        
+                        self.textDidChange()
+                    }
+                    else
+                    {
+                        if let detailString = dict["detail"] as? String
+                        {
+                            PopupManager.singleton.Popup(title: "Error", body: detailString, presentationViewCont: self)
+                        }
+                    }
+                    
+                    
+                }
+                catch let error as NSError
+                {
+                    print(error)
+                }
+                
+            }
+            else
+            {
+                PopupManager.singleton.Popup(title: "Error", body: "Please check your connection", presentationViewCont: self)
+            }
+            
+            
+            
+        })
+
+    }
+    
+    func PushImageUpdate()
+    {
+        let url = Network.domain + "UploadBarImages.php"
+        Network.singleton.UploadImages(url, UpdatingBar.Images, {
+            (success,output) in
+            
+            if success
+            {
+                if let output = output
+                {
+                    do
+                    {
+                        if let dict = try JSONSerialization.jsonObject(with: output, options: .allowFragments) as? NSDictionary
+                        {
+                            if let succ = dict["success"] as? String
+                            {
+                                if succ == "true"
+                                {
+                                    if let detail = dict["detail"] as? String
+                                    {
+                                        self.LoadUpdatingBarToAccounts()
+                                        
+                                        self.textDidChange()
+                                        
+                                        if let detail = dict["detail"] as? String
+                                        {
+                                            PopupManager.singleton.Popup(title: "Success!", body: detail, presentationViewCont: self)
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if let detail = dict["detail"] as? String
+                                    {
+                                        PopupManager.singleton.Popup(title: "Error", body: detail, presentationViewCont: self)
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                NSLog("invalid server response : UploadBarImages.php")
+                            }
+                        }
+                        else
+                        {
+                            NSLog("invalid server response : UploadBarImages.php")
+                        }
+                    }
+                    catch
+                    {
+                        
+                    }
+                }
+                else
+                {
+                    NSLog("invalid server response : UploadBarImages.php")
+                }
+            }
+            else
+            {
+                NSLog("no internet")
+            }
+        
+        })
+    }
+    
+    
     //==============================================================================================================
     //                                     UPDATING (TO ALLOW UPDATING OR NOT)
     //==============================================================================================================
@@ -346,7 +430,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     func NeedsUpdating() -> Bool
     {
         guard UpdatingBar.name != "" else {NSLog("No Updating Bar Loaded");return false}
-        guard Account.singleton.Merchant_Bar != nil else {NSLog("No bar loaded yet?");return false}
+        guard let merchantBar = Account.singleton.Merchant_Bar else {NSLog("No bar loaded yet?");return false}
         
         var toUpdate = false
         //fields to check : Name, description, contact, website, location
@@ -355,81 +439,81 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         
 //        var set = CharacterSet.urlQueryAllowed
 //        set.insert(charactersIn: "+&")
-        if Account.singleton.Merchant_Bar?.name != UpdatingBar.name {
+        if merchantBar.name != UpdatingBar.name {
             toUpdate = true
             
             let param = "Bar_Name=\(UpdatingBar.name.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.description != UpdatingBar.description {
+        if merchantBar.description != UpdatingBar.description {
             toUpdate = true
             let param = "Bar_Description=\(UpdatingBar.description.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.contact != UpdatingBar.contact {
+        if merchantBar.contact != UpdatingBar.contact {
             toUpdate = true
             let param = "Bar_Contact=\(UpdatingBar.contact.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.website != UpdatingBar.website {
+        if merchantBar.website != UpdatingBar.website {
             toUpdate = true
             let param = "Bar_Wesbite=\(UpdatingBar.website.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.loc_lat != UpdatingBar.loc_lat {
+        if merchantBar.loc_lat != UpdatingBar.loc_lat {
             toUpdate = true
             let param = "Bar_Location_Latitude=\(UpdatingBar.loc_lat)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.loc_long != UpdatingBar.loc_long {
+        if merchantBar.loc_long != UpdatingBar.loc_long {
             toUpdate = true
             let param = "Bar_Location_Longitude=\(UpdatingBar.loc_long)"
             urlParameters.append(param)
         }
 
-        if Account.singleton.Merchant_Bar?.address != UpdatingBar.address {
+        if merchantBar.address != UpdatingBar.address {
             toUpdate = true
             let param = "Bar_Address=\(UpdatingBar.address.AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
         
-        if Account.singleton.Merchant_Bar?.openClosingHours[0] != UpdatingBar.openClosingHours[0]
+        if merchantBar.openClosingHours[0] != UpdatingBar.openClosingHours[0]
         {
             toUpdate = true
             let param = "OH_Monday=\(UpdatingBar.openClosingHours[0].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[1] != UpdatingBar.openClosingHours[1]
+        if merchantBar.openClosingHours[1] != UpdatingBar.openClosingHours[1]
         {
             toUpdate = true
             let param = "OH_Tuesday=\(UpdatingBar.openClosingHours[1].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[2] != UpdatingBar.openClosingHours[2]
+        if merchantBar.openClosingHours[2] != UpdatingBar.openClosingHours[2]
         {
             toUpdate = true
             let param = "OH_Wednesday=\(UpdatingBar.openClosingHours[2].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[3] != UpdatingBar.openClosingHours[3]
+        if merchantBar.openClosingHours[3] != UpdatingBar.openClosingHours[3]
         {
             toUpdate = true
             let param = "OH_Thursday=\(UpdatingBar.openClosingHours[3].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[4] != UpdatingBar.openClosingHours[4]
+        if merchantBar.openClosingHours[4] != UpdatingBar.openClosingHours[4]
         {
             toUpdate = true
             let param = "OH_Friday=\(UpdatingBar.openClosingHours[4].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[5] != UpdatingBar.openClosingHours[5]
+        if merchantBar.openClosingHours[5] != UpdatingBar.openClosingHours[5]
         {
             toUpdate = true
             let param = "OH_Saturday=\(UpdatingBar.openClosingHours[5].AddPercentEncodingForURL(plusForSpace: true)!)"
             urlParameters.append(param)
         }
-        if Account.singleton.Merchant_Bar?.openClosingHours[6] != UpdatingBar.openClosingHours[6]
+        if merchantBar.openClosingHours[6] != UpdatingBar.openClosingHours[6]
         {
             toUpdate = true
             let param = "OH_Sunday=\(UpdatingBar.openClosingHours[6].AddPercentEncodingForURL(plusForSpace: true)!)"
@@ -447,6 +531,19 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         }
 
         
+    }
+    
+    func NeedsImagesUpdating() -> Bool
+    {
+        guard let merchantBar = Account.singleton.Merchant_Bar else {return false}
+        if merchantBar.Images != UpdatingBar.Images
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
     }
     
     func textDidChange()
@@ -475,6 +572,12 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         saturdayTextField.text = "SATURDAY:" + bar.openClosingHours[5]
         sundayTextField.text = "SUNDAY:" + bar.openClosingHours[6]
         chooseLocationLabel.text = "Location: " + bar.address
+        
+        ChooseLocationViewController.singleton.currentLat = UpdatingBar.loc_lat
+        ChooseLocationViewController.singleton.currentLong = UpdatingBar.loc_long
+        ChooseLocationViewController.singleton.currentAddress = UpdatingBar.address
+        
+        UpdateBarGallery()
     }
     
     func UpdateUpdatingBar()
@@ -496,6 +599,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         UpdatingBar.loc_lat = ChooseLocationViewController.singleton.currentLat
         UpdatingBar.loc_long = ChooseLocationViewController.singleton.currentLong
         UpdatingBar.address = ChooseLocationViewController.singleton.currentAddress
+        
     }
 
     func LoadUpdatingBarFromAccounts()
@@ -514,6 +618,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         UpdatingBar.loc_lat = Merchant_Bar.loc_lat
         UpdatingBar.loc_long = Merchant_Bar.loc_long
         UpdatingBar.address = Merchant_Bar.address
+        UpdatingBar.Images = Merchant_Bar.Images
 
     }
     
@@ -531,15 +636,15 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
             bar.loc_lat = self.UpdatingBar.loc_lat
             bar.loc_long = self.UpdatingBar.loc_long
             bar.address = self.UpdatingBar.address
+            bar.Images = self.UpdatingBar.Images
         }
     }
     func TextUpdated()
     {
         //check if needs updating
-        if NeedsUpdating()
+        if NeedsUpdating() || NeedsImagesUpdating()
         {
             updateButton.isEnabled = true
-
 
         }
         else //grey out update button
@@ -875,13 +980,13 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectImageCollectionViewCell",for: indexPath) as? SelectImageCollectionViewCell
 
-        guard indexPath.row < selectedImages.count else {
+        guard indexPath.row < UpdatingBar.Images.count else {
             
             cell?.imageView.image = nil
             return cell!
         }
         
-        let image = selectedImages[indexPath.row]
+        let image = UpdatingBar.Images[indexPath.row]
         
         cell?.imageView.image = image
         
@@ -889,7 +994,7 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     }
  
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        if indexPath.row < selectedImages.count
+        if indexPath.row < UpdatingBar.Images.count
         {
             return true
         }
@@ -903,24 +1008,25 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         let originIndex = sourceIndexPath.row
         let destinationIndex = destinationIndexPath.row
         
-        guard originIndex < selectedImages.count else {return}
-        if destinationIndex < selectedImages.count
+        guard originIndex < UpdatingBar.Images.count else {return}
+        if destinationIndex < UpdatingBar.Images.count
         {
-            let image = selectedImages[originIndex]
-            selectedImages.remove(at: originIndex)
-            selectedImages.insert(image, at: destinationIndex)
+            let image = UpdatingBar.Images[originIndex]
+            UpdatingBar.Images.remove(at: originIndex)
+            UpdatingBar.Images.insert(image, at: destinationIndex)
             
             UpdateCollectionViewUI()
         }
         else
         {
-            let image = selectedImages[originIndex]
-            selectedImages.remove(at: originIndex)
-            selectedImages.append(image)
+            let image = UpdatingBar.Images[originIndex]
+            UpdatingBar.Images.remove(at: originIndex)
+            UpdatingBar.Images.append(image)
             
             UpdateCollectionViewUI()
-
         }
+        
+        textDidChange()
 
 
     }
@@ -968,14 +1074,16 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
         {
             if let image = info[UIImagePickerControllerOriginalImage] as? UIImage
             {
-                if index < selectedImages.count
+                if index < UpdatingBar.Images.count
                 {
-                    selectedImages[index] = image   
+                    UpdatingBar.Images[index] = image   
                 }
                 else
                 {
-                    selectedImages.append(image)
+                    UpdatingBar.Images.append(image)
                 }
+                
+                textDidChange()
 
                 self.UpdateCollectionViewUI()
             }
@@ -1024,13 +1132,15 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
             
             if let index = self.currentImageIndex
             {
-                if index < self.selectedImages.count
+                if index < self.UpdatingBar.Images.count
                 {
-                    self.selectedImages.remove(at: index)
+                    self.UpdatingBar.Images.remove(at: index)
                     
                     self.UpdateCollectionViewUI()
                 }
             }
+            
+            self.textDidChange()
 
         }
         
@@ -1045,6 +1155,14 @@ class EditProfileViewController: UIViewController,UITextViewDelegate,UITextField
     
     func UpdateCollectionViewUI()
     {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func UpdateBarGallery() {
+        //update selected images
+        
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }

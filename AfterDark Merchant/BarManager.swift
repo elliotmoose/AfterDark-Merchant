@@ -8,10 +8,16 @@
 
 import Foundation
 import UIKit
+
+protocol BarManagerToProfileViewDelegate : class {
+    func UpdateBarGallery()
+}
+
 class BarManager
 {
     static let singleton = BarManager()
     
+    weak var delegate : BarManagerToProfileViewDelegate?
     //========================================================================================================
     //                                          load bar functions
     //========================================================================================================
@@ -27,6 +33,8 @@ class BarManager
                 //in case its in edit, update display
                 EditProfileViewController.singleton.LoadUpdatingBarFromAccounts()
                 EditProfileViewController.singleton.DisplayUpdatingBar()
+                
+                self.BeginLoadBarImages()
                 
                 handler(true)
             }
@@ -71,6 +79,7 @@ class BarManager
                                 handler(false,"",Bar())
                             }
                             
+                            
                         }
                         else
                         {
@@ -90,33 +99,101 @@ class BarManager
             
         })
         
-     
-        //load max image count 
-        let maxImageCountUrl = Network.domain + "GetNumberOfImages.php"
         
-        //load max count
-        Network.singleton.DataFromUrl(maxImageCountUrl) { (success, output) in
+    }
+    
+    func BeginLoadBarImages()
+    {
+        guard let barID = Account.singleton.Merchant_Bar_ID else {
+            PopupManager.singleton.GlobalPopup(title: "Error", body: "Please log in again")
+            return
+        }
+        
+        //get number of pages
+        let urlNumberOfImages = Network.clientDomain + "GetNumberOfImages.php?Bar_ID=\(barID)"
+        Network.singleton.StringFromUrl(urlNumberOfImages, handler: {
+            (success,output) -> Void in
             if success
             {
                 if let output = output
                 {
-                    //incomplete
+                    if let noOfImages = Int(output)
+                    {
+                        self.LoadBarImages(noOfImages, barID)
+                    }
+                    else
+                    {
+                        PopupManager.singleton.GlobalPopup(title: "Error", body: "Invalid server response")
+                    }
                 }
                 else
                 {
-                    
+                    NSLog("No response from server")
                 }
             }
             else
             {
-                
+                NSLog("No internet connection")
             }
-        }
+            
+        })
         
-        let loadImageUrl = Network.domain + "AfterDarkServer/GetBarGalleryImage.php?Bar_ID=0&Image_Index="
+        
+        
     }
 
-    
+    func LoadBarImages(_ numberOfImages : Int, _ barID : String)
+    {
+        guard numberOfImages > 0 else {return}
+        
+        for index in 0...numberOfImages-1
+        {
+            
+            let i = index;
+            let urlLoadImageAtIndex = Network.clientDomain + "GetBarGalleryImage.php?Bar_ID=\(barID)&Image_Index=\(i)"
+            
+            Network.singleton.DataFromUrl(urlLoadImageAtIndex, handler:
+                {
+                    (success,output)->Void in
+                    
+                    if success == true
+                    {
+                        if let output = output
+                        {
+                            
+                            if let image = UIImage(data: output)
+                            {
+                                if let bar = Account.singleton.Merchant_Bar
+                                {
+                                    bar.Images.append(image)
+                                }
+                                
+                                //in case its in edit, update display
+                                EditProfileViewController.singleton.LoadUpdatingBarFromAccounts()
+                                EditProfileViewController.singleton.DisplayUpdatingBar()
+                            }
+                            else
+                            {
+                                NSLog("invalid image format")
+                                
+                                let stringout = String(data: output, encoding: .utf8)!
+                                NSLog(stringout)
+                            }
+                            
+                            
+                        }
+                        else
+                        {
+                            NSLog("no image found")
+                        }
+                    }
+                    else
+                    {
+                        NSLog("Cant connect, check connection")
+                    }
+            })
+        }
+    }
     func NewBarFromDict(_ dict: NSDictionary) ->Bar
     {
         

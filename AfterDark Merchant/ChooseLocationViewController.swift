@@ -65,7 +65,7 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         mapView?.isMyLocationEnabled = true
         mapView?.delegate = self
-        mapView?.frame = view.frame
+        mapView?.frame = CGRect(x: 0, y: 0, width: Sizing.ScreenWidth(), height: Sizing.ScreenHeight())
         
         marker.map = mapView
         
@@ -226,7 +226,7 @@ class ChooseLocationViewController: UIViewController,GMSMapViewDelegate,CLLocati
         self.delegate?.SetUpdatingBarLocation()
         
         //dismiss
-        self.navigationController?.popViewController(animated: true)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
     //================================================================================================
